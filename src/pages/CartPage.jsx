@@ -64,7 +64,8 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
     <section className="container my-5">
       <h1 className="mb-3">Carrito</h1>
 
-      <ul className="list-group mb-3">
+      {/* 👇 agregamos la clase cart-list para estilos responsive específicos */}
+      <ul className="list-group cart-list mb-3">
         {items.map((item) => (
           <li
             className="list-group-item d-flex align-items-center gap-3"
@@ -88,7 +89,7 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
             </div>
 
             {/* Stepper de cantidad (±) */}
-            <div className="d-flex align-items-center gap-2">
+            <div className="cart-stepper d-flex align-items-center gap-2">
               <button
                 type="button"
                 className="btn btn-outline-secondary btn-sm rounded-circle"
@@ -117,7 +118,7 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
 
             {/* Quitar ítem */}
             <button
-              className="btn btn-outline-danger"
+              className="btn btn-outline-danger cart-remove"
               onClick={() => removeFromCart(item.id)}
             >
               Quitar
