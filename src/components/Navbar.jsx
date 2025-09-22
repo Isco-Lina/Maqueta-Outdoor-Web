@@ -12,12 +12,7 @@ export default function Navbar({ cartCount = 0 }) {
       <div className="container">
         {/* Marca */}
         <Link className="navbar-brand fw-bold" to="/">
-          <img
-            src="/src/assets/images/logo.png"
-            alt="Logo"
-            max-width="100%"
-            width="100px"
-          />
+          <img src="/logo.png" alt="Logo" max-width="100%" width="100px" />
         </Link>
 
         {/* Toggler para móvil */}
