@@ -71,6 +71,7 @@ export function buildWhatsAppURL({ phoneIntl = "", message = "" }) {
 
 // Construye un mailto con subject y body URL-encoded
 export function buildMailtoURL({ to = "", subject = "", body = "" }) {
-  const params = new URLSearchParams({ subject, body });
-  return `mailto:${to}?${params.toString()}`;
+  const encSubject = encodeURIComponent(subject);
+  const encBody = encodeURIComponent(body);
+  return `mailto:${to}?subject=${encSubject}&body=${encBody}`;
 }
