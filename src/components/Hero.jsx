@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
-import "../styles/hero.css"; // <-- nuevos estilos
+import "../styles/hero.css";
 
 export default function Hero() {
+  // Construye la URL robusta (sirve en dev, build y GitHub Pages con subcarpeta)
+  const bg = `${import.meta.env.BASE_URL}images/ropa-tecnica.jpg`;
+
   return (
     <section
       className="hero-bleed d-flex align-items-center"
       role="banner"
       aria-label="Explora sin límites"
+      style={{ backgroundImage: `url(${bg})` }} // 👈 aquí va la imagen
     >
-      {/* Capa de gradiente: oscuro a la izquierda (texto), transparente a la derecha */}
       <div className="hero-overlay" />
 
-      {/* Contenido (contenido centrado pero con container para márgenes) */}
       <div className="container position-relative">
         <div className="col-12 col-lg-7">
           <h1 className="fw-bold display-4 text-white">Explora sin límites</h1>

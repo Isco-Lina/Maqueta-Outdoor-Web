@@ -1,17 +1,17 @@
+/* src/styles/hero.css */
+
 /* Sección full-bleed con imagen de fondo */
 .hero-bleed {
   position: relative;
   width: 100%;
   min-height: 70vh; /* 100vh si quieres pantalla completa */
-  background-image: url("/images/ropa-tecnica.jpg");
   background-size: cover;
   /* Mueve el foco hacia la derecha para que se vea mejor a la persona */
-  background-position: 75% center; /* 50% center = centrado; prueba 80% si aún corta */
-  /* Opcional en desktop: efecto leve parallax */
-  background-attachment: scroll; /* cambia a fixed si te gusta el efecto */
+  background-position: 75% center; /* prueba 70–85% si aún corta */
+  background-attachment: scroll; /* cambia a fixed si te gusta el efecto en desktop */
 }
 
-/* Gradiente para contraste del texto (más suave que un overlay gris) */
+/* Gradiente para contraste del texto */
 .hero-overlay {
   position: absolute;
   inset: 0;
