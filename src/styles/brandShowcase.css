@@ -1,0 +1,61 @@
+.brand-rail {
+  position: relative;
+  overflow: hidden;
+  padding: 18px 0;
+  background: #f8fafc; /* leve contraste */
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.brand-track {
+  display: flex;
+  gap: 48px;
+  width: max-content;
+  animation: brand-scroll 28s linear infinite;
+}
+
+.brand-item {
+  display: grid;
+  place-items: center;
+  min-width: 160px;
+  height: 70px;
+}
+
+.brand-item img {
+  max-height: 42px;
+  filter: grayscale(1) contrast(1.1);
+  opacity: 0.8;
+  transform: translateZ(0);
+  transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
+}
+
+.brand-item:hover img {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+/* Animación infinita hacia la izquierda */
+@keyframes brand-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  } /* como duplicamos, -50% cierra el loop */
+}
+
+/* Pausa al pasar el mouse sobre la banda completa */
+.brand-rail:hover .brand-track {
+  animation-play-state: paused;
+}
+
+/* Responsivo */
+@media (max-width: 576px) {
+  .brand-item {
+    min-width: 120px;
+    gap: 24px;
+  }
+  .brand-item img {
+    max-height: 36px;
+  }
+}

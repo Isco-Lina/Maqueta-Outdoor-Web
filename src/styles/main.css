@@ -1,0 +1,451 @@
+/* ==========================================================================
+   WEKE – Tema base sobre Bootstrap
+   --------------------------------------------------------------------------
+   Notas:
+   - Mantiene Bootstrap y agrega capa visual propia.
+   - Usa variables para colores/espaciados.
+   - Secciones comentadas: variables, reset, nav, hero, botones, grid/cards,
+     carrito, formularios, footer, utilidades, responsive.
+   ========================================================================== */
+
+/* ===========================
+   1) Variables de tema
+   =========================== */
+
+:root {
+  /* Colores base */
+  --weke-bg: #f6f8fa; /* Fondo página / hero */
+  --weke-surface: #ffffff; /* Tarjetas / superficies */
+  --weke-text: #111827; /* Texto principal (gris muy oscuro) */
+  --weke-muted: #6b7280; /* Texto secundario */
+  --weke-border: #e5e7eb; /* Bordes sutiles */
+
+  /* Marca */
+  --weke-brand: #111827; /* Negro “suave” para marca */
+  --weke-accent: #111827; /* Botones y enlaces destacados */
+  --weke-accent-contrast: #ffffff;
+
+  /* Fondo oscuro (footer) */
+  --weke-dark: #1f2937;
+  --weke-dark-text: #e5e7eb;
+
+  /* Sombra y radios */
+  --weke-radius: 14px;
+  --weke-radius-lg: 18px;
+  --weke-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --weke-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+
+  /* Tipografía y espaciado */
+  --weke-font: Inter, system-ui, -apple-system, Segoe UI, Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+  --weke-space-1: 0.5rem;
+  --weke-space-2: 1rem;
+  --weke-space-3: 1.5rem;
+  --weke-space-4: 2rem;
+}
+
+/* ===========================
+   2) Reset suave / base
+   =========================== */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--weke-bg);
+  color: var(--weke-text);
+  font-family: var(--weke-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===========================
+   3) Navbar
+   =========================== */
+
+.wek-navbar,
+.wek-navbar.navbar {
+  background: #f8fafb !important; /* Ligeramente más claro que el fondo */
+  border-bottom: 1px solid var(--weke-border);
+  box-shadow: var(--weke-shadow-sm);
+}
+
+.wek-navbar .navbar-brand {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: var(--weke-brand) !important;
+}
+
+.wek-navbar .nav-link {
+  color: #374151 !important;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+}
+
+.wek-navbar .nav-link.active,
+.wek-navbar .nav-link:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--weke-brand) !important;
+}
+
+.wek-navbar .btn {
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-weight: 600;
+}
+
+/* ===========================
+   4) Sección Hero
+   =========================== */
+
+.wek-hero .bg-light,
+.wek-hero .wek-hero-box {
+  background: #f3f5f7 !important; /* Caja clara como en la captura */
+  border: 1px solid var(--weke-border);
+  border-radius: var(--weke-radius-lg);
+  box-shadow: var(--weke-shadow);
+}
+
+.wek-hero .display-5,
+.wek-hero h1 {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.wek-hero .fs-5 {
+  color: var(--weke-muted);
+}
+
+.wek-hero .btn {
+  margin-top: var(--weke-space-2);
+}
+
+/* ===========================
+   5) Botones (estilo pill)
+   =========================== */
+
+.wek-btn.btn {
+  border-radius: 999px !important;
+  padding: 0.9rem 1.4rem;
+  font-size: 1.125rem; /* ~18px */
+  font-weight: 700;
+  border: 2px solid transparent;
+  background: var(--weke-accent);
+  color: var(--weke-accent-contrast);
+  transition: transform 0.08s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.wek-btn.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.12);
+  background: #0f172a; /* un tono más profundo */
+}
+
+.btn-outline-dark.wek-btn {
+  background: transparent;
+  color: var(--weke-brand);
+  border-color: rgba(17, 24, 39, 0.2);
+}
+
+.btn-outline-dark.wek-btn:hover {
+  background: var(--weke-brand);
+  color: #fff;
+}
+
+/* ===========================
+   6) Grid & Cards de producto
+   =========================== */
+
+.card {
+  border-radius: var(--weke-radius);
+  border: 1px solid var(--weke-border);
+  box-shadow: var(--weke-shadow-sm);
+  overflow: hidden;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px rgba(17, 24, 39, 0.12);
+  border-color: #d1d5db;
+}
+
+.card .card-title {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.card .card-text {
+  color: var(--weke-muted);
+}
+
+/* Precio + CTA */
+.card .mt-auto strong {
+  font-weight: 800;
+}
+
+/* ===========================
+   7) Página Carrito
+   =========================== */
+
+.list-group-item {
+  border-color: var(--weke-border);
+}
+
+.list-group-item img {
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--weke-border);
+}
+
+input[type="number"].form-control {
+  border-radius: 10px;
+}
+
+/* Total */
+.wek-cart-total {
+  font-weight: 800;
+}
+
+/* ===========================
+   8) Formularios / Contacto
+   =========================== */
+
+.form-label {
+  font-weight: 600;
+}
+
+.form-control,
+.form-select,
+textarea.form-control {
+  border-radius: 12px;
+  border-color: var(--weke-border);
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(17, 24, 39, 0.08);
+  border-color: #cbd5e1;
+}
+
+/* ===========================
+   9) Footer oscuro
+   =========================== */
+
+footer {
+  background: var(--weke-dark) !important;
+  color: var(--weke-dark-text);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+footer a {
+  color: var(--weke-dark-text);
+  opacity: 0.95;
+}
+
+footer a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ===========================
+   10) Utilidades
+   =========================== */
+
+.shadow-soft {
+  box-shadow: var(--weke-shadow);
+}
+.rounded-wek {
+  border-radius: var(--weke-radius);
+}
+.rounded-wek-lg {
+  border-radius: var(--weke-radius-lg);
+}
+
+/* ===========================
+   11) Responsive tweaks
+   =========================== */
+
+@media (max-width: 992px) {
+  .wek-navbar .nav-link {
+    padding: 0.45rem 0.6rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .wek-hero .display-5,
+  .wek-hero h1 {
+    font-size: clamp(1.75rem, 6vw, 2.25rem);
+  }
+  .wek-btn.btn {
+    padding: 0.8rem 1.1rem;
+    font-size: 1rem;
+  }
+}
+
+/* ===========================
+   Hero Outdoor
+   =========================== */
+.wek-hero {
+  height: clamp(320px, 60vh, 520px);
+  position: relative;
+  border: 1px solid var(--weke-border);
+  background: #000;
+}
+.wek-hero-media {
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/hero.jpg"); /* <-- pon tu imagen */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.7);
+}
+.wek-hero-overlay {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===========================
+   Category tiles
+   =========================== */
+.wek-cat-tile {
+  aspect-ratio: 4/3;
+  border: 1px solid var(--weke-border);
+  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: var(--weke-shadow-sm);
+}
+.wek-cat-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px rgba(17, 24, 39, 0.12);
+  border-color: #d1d5db;
+}
+.wek-cat-tile .object-fit-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.wek-cat-label {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(17, 24, 39, 0.85);
+  color: #fff;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* ===========================
+   Brand bar
+   =========================== */
+.wek-brandbar img {
+  filter: grayscale(100%);
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+.wek-brandbar img:hover {
+  filter: none;
+  opacity: 0.95;
+}
+
+/* ===========================
+   Productos: media consistente
+   =========================== */
+
+/* Altura consistente para todas las fotos (cuadrada por defecto).
+   Cambia --product-ratio a 4/3 si prefieres más horizontal. */
+:root {
+  --product-ratio: 1 / 1; /* 1/1 (cuadrado) o 4/3 (horizontal) */
+  --product-pad: 6%; /* padding interno para que no “toque” bordes */
+  --product-bg: #fff; /* fondo del contenedor de imagen */
+}
+
+.product-card {
+  overflow: hidden;
+}
+
+.product-media {
+  position: relative;
+  aspect-ratio: var(--product-ratio);
+  background: var(--product-bg);
+  border-bottom: 1px solid var(--bs-border-color);
+  display: grid;
+  place-items: center;
+  padding: var(--product-pad);
+}
+
+/* La imagen se centra, mantiene proporción y jamás se deforma. */
+.product-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* cámbialo a "cover" si quisieras recortes tipo catálogo */
+  display: block;
+}
+
+/* hover un poco más suave en cards de producto */
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(2, 6, 23, 0.1);
+  border-color: #d1d5db;
+}
+
+/* ====== Category tiles ====== */
+.cat-tile {
+  position: relative;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f8fafc;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.cat-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px rgba(17, 24, 39, 0.12);
+  border-color: #d1d5db;
+}
+
+/* área de imagen con proporción 4:3 */
+.cat-tile .media {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(180deg, #eef2f7, #e5e7eb);
+}
+/* .cat-tile .media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+} */
+/* si no hay imagen, usamos fondo de reserva */
+.cat-tile .media.fallback {
+  background: repeating-linear-gradient(
+    45deg,
+    #eef2f7,
+    #eef2f7 10px,
+    #e5e7eb 10px,
+    #e5e7eb 20px
+  );
+}
+
+/* etiqueta */
+.cat-tile .label {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(17, 24, 39, 0.85);
+  color: #fff;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}

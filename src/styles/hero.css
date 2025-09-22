@@ -1,0 +1,43 @@
+/* Sección full-bleed con imagen de fondo */
+.hero-bleed {
+  position: relative;
+  width: 100%;
+  min-height: 70vh; /* 100vh si quieres pantalla completa */
+  background-image: url("/images/ropa-tecnica.jpg");
+  background-size: cover;
+  /* Mueve el foco hacia la derecha para que se vea mejor a la persona */
+  background-position: 75% center; /* 50% center = centrado; prueba 80% si aún corta */
+  /* Opcional en desktop: efecto leve parallax */
+  background-attachment: scroll; /* cambia a fixed si te gusta el efecto */
+}
+
+/* Gradiente para contraste del texto (más suave que un overlay gris) */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.3) 35%,
+    rgba(0, 0, 0, 0.1) 60%,
+    rgba(0, 0, 0, 0) 85%
+  );
+  pointer-events: none;
+}
+
+/* En pantallas pequeñas, recentra la imagen y aumenta un poco el alto */
+@media (max-width: 768px) {
+  .hero-bleed {
+    min-height: 60vh;
+    background-position: center 30%;
+  }
+  .hero-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.3) 45%,
+      rgba(0, 0, 0, 0.1) 75%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+}
