@@ -1,24 +1,16 @@
+// CategoryShowcase.jsx
+// --------------------
+// Grid de 4 tarjetas destacadas en el home (Hombre, Mujer, Niños, Equipamiento).
+// Cada tarjeta navega a /productos con query params.
+// Usa un mapeo similar al de Categories.jsx para mantener consistencia.
+
 import { Link } from "react-router-dom";
 import "../styles/categoryShowcase.css";
 
-/**
- * Mapeo de tarjetas → URL que entiende /productos:
- * - Hombre        -> /productos?aud=hombre
- * - Mujer         -> /productos?aud=mujer
- * - Niños y Bebés -> /productos?aud=infantil
- * - Equipamiento  -> /productos?cat=accesorios
- */
+// Definición estática de tiles principales
 const tiles = [
-  {
-    title: "Hombre",
-    img: "/images/categories/hombre.png",
-    slug: "hombre",
-  },
-  {
-    title: "Mujer",
-    img: "/images/categories/mujer.png",
-    slug: "mujer",
-  },
+  { title: "Hombre", img: "/images/categories/hombre.png", slug: "hombre" },
+  { title: "Mujer", img: "/images/categories/mujer.png", slug: "mujer" },
   {
     title: "Niños y Bebés",
     img: "/images/categories/niños.png",
@@ -31,6 +23,7 @@ const tiles = [
   },
 ];
 
+// Función auxiliar que devuelve el link según el slug
 const linkFor = (slug) => {
   const s = String(slug).toLowerCase();
   if (s === "hombre") return "/productos?aud=hombre";
@@ -39,19 +32,14 @@ const linkFor = (slug) => {
     return "/productos?aud=infantil";
   if (["equipamiento", "accesorios"].includes(s))
     return "/productos?cat=accesorios";
-
-  // Fallback por si agregas nuevas tiles sin mapear aún:
+  // fallback genérico
   return `/productos?categoria=${encodeURIComponent(s)}`;
 };
 
-/**
- * Grid de 4 tarjetas con imagen de fondo + overlay con título y botón.
- * - Cada tarjeta completa es un enlace a /productos con query params.
- * - Efectos visuales conservados.
- */
 export default function CategoryShowcase() {
   return (
     <section className="container my-5">
+      {/* Título y link a la página de categorías */}
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2 className="m-0">Elige algunas de nuestras categoría</h2>
         <Link className="text-decoration-none" to="/categorias">
@@ -59,7 +47,7 @@ export default function CategoryShowcase() {
         </Link>
       </div>
 
-      {/* Grid responsivo: 1 col en móvil, 2 en md, 4 en lg */}
+      {/* Grilla responsiva con 4 tiles */}
       <div className="row g-4">
         {tiles.map(({ title, img, slug }) => (
           <div key={slug} className="col-12 col-md-6 col-lg-3">
@@ -71,6 +59,7 @@ export default function CategoryShowcase() {
   );
 }
 
+// Tarjeta individual clickeable
 function TileCard({ title, img, to }) {
   return (
     <Link
@@ -85,14 +74,14 @@ function TileCard({ title, img, to }) {
       }}
       aria-label={`Ver colección ${title}`}
     >
-      {/* Overlay visual (no bloquea el click) */}
+      {/* Overlay degradado para contraste */}
       <div
         className="position-absolute top-0 start-0 w-100 h-100"
         style={{
           background:
             "linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35))",
           transition: "background .3s ease",
-          pointerEvents: "none", // asegura que el click llegue al Link
+          pointerEvents: "none", // deja el link clickeable
         }}
       />
 
@@ -100,21 +89,18 @@ function TileCard({ title, img, to }) {
       <div className="position-absolute top-50 start-50 translate-middle text-center text-white px-3 w-100">
         <h3
           className="fw-bold"
-          style={{
-            textShadow: "0 2px 10px rgba(0,0,0,.5)",
-            fontSize: 36,
-          }}
+          style={{ textShadow: "0 2px 10px rgba(0,0,0,.5)", fontSize: 36 }}
         >
           {title}
         </h3>
 
-        {/* Botón visual */}
+        {/* Botón decorativo (no bloquea el click) */}
         <span
           className="btn btn-light mt-3 px-4 py-2 rounded-pill"
           style={{
             backdropFilter: "blur(2px)",
             boxShadow: "0 8px 16px rgba(0,0,0,.2)",
-            pointerEvents: "none", // también deja pasar el click al Link
+            pointerEvents: "none",
           }}
         >
           Ver colección

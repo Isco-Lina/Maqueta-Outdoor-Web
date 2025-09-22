@@ -1,3 +1,6 @@
+// Helpers para formatear CLP y construir el mensaje de pedido
+// que se envía por WhatsApp/Email desde la página de Contacto.
+
 export const CLP = (n = 0) =>
   new Intl.NumberFormat("es-CL", {
     style: "currency",
@@ -5,6 +8,7 @@ export const CLP = (n = 0) =>
     maximumFractionDigits: 0,
   }).format(Number.isFinite(n) ? n : 0);
 
+// Arma el texto final del pedido (carrito + datos del cliente)
 export function buildOrderText({ cart = [], customer = {}, extra = {} }) {
   const {
     nombre = "",
@@ -21,7 +25,7 @@ export function buildOrderText({ cart = [], customer = {}, extra = {} }) {
     (acc, it) => acc + (Number(it.price) || 0) * (Number(it.qty) || 1),
     0
   );
-  const despacho = extra.despachoEstimado ?? 0;
+  const despacho = extra.despachoEstimado ?? 0; // informativo
   const total = subtotal + despacho;
 
   const items = cart.map((it, i) => {
@@ -58,13 +62,14 @@ export function buildOrderText({ cart = [], customer = {}, extra = {} }) {
   return { texto, subtotal, despacho, total };
 }
 
+// Construye URL "wa.me" con número en formato internacional (sin '+')
 export function buildWhatsAppURL({ phoneIntl = "", message = "" }) {
-  // phoneIntl sin '+' y solo dígitos. Ej: "56987654321"
   const base = `https://wa.me/${String(phoneIntl).replace(/\D/g, "")}`;
   const params = `?text=${encodeURIComponent(message)}`;
   return `${base}${params}`;
 }
 
+// Construye un mailto con subject y body URL-encoded
 export function buildMailtoURL({ to = "", subject = "", body = "" }) {
   const params = new URLSearchParams({ subject, body });
   return `mailto:${to}?${params.toString()}`;

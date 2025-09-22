@@ -1,17 +1,15 @@
-/* src/styles/hero.css */
+/* ===== Hero (cabecera visual full-bleed) ===== */
 
-/* Sección full-bleed con imagen de fondo */
 .hero-bleed {
   position: relative;
   width: 100%;
-  min-height: 70vh; /* 100vh si quieres pantalla completa */
+  min-height: 70vh;
   background-size: cover;
-  /* Mueve el foco hacia la derecha para que se vea mejor a la persona */
-  background-position: 75% center; /* prueba 70–85% si aún corta */
-  background-attachment: scroll; /* cambia a fixed si te gusta el efecto en desktop */
+  background-position: 75% center; /* foco hacia la derecha */
+  background-attachment: scroll; /* cambia a fixed si quieres parallax */
 }
 
-/* Gradiente para contraste del texto */
+/* Gradiente para legibilidad del texto */
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -25,7 +23,7 @@
   pointer-events: none;
 }
 
-/* En pantallas pequeñas, recentra la imagen y aumenta un poco el alto */
+/* Mobile: más alto y gradiente vertical */
 @media (max-width: 768px) {
   .hero-bleed {
     min-height: 60vh;

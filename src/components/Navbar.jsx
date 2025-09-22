@@ -1,21 +1,36 @@
 import { Link, NavLink } from "react-router-dom";
 
 /**
- * Navbar WEKE
- * - Usa Bootstrap 5 + clases del tema (wek-navbar).
- * - Contador de carrito via prop `cartCount`.
- * - NavLink activa la ruta con .active (Bootstrap la resalta).
+ * Barra de navegación superior:
+ * - Logo (marca) a la izquierda.
+ * - Links a Inicio / Productos / Contacto.
+ * - Botón de Carrito con contador (prop `cartCount`).
+ *
+ * Notas:
+ * - Usa clases de Bootstrap 5 (navbar-expand-lg, navbar-toggler, collapse...).
+ * - <NavLink> aplica la clase .active automáticamente en la ruta activa.
+ * - El logo carga desde /public/logo.png (puedes cambiarlo).
  */
 export default function Navbar({ cartCount = 0 }) {
   return (
     <nav className="navbar navbar-expand-lg bg-light wek-navbar">
       <div className="container">
-        {/* Marca */}
-        <Link className="navbar-brand fw-bold" to="/">
-          <img src="/logo.png" alt="Logo" max-width="100%" width="100px" />
+        {/* Marca: al hacer click navega al home */}
+        <Link
+          className="navbar-brand fw-bold d-flex align-items-center gap-2"
+          to="/"
+        >
+          {/* Logo simple (si usas GitHub Pages en subcarpeta, podrías usar import.meta.env.BASE_URL) */}
+          <img
+            src="/logo.png"
+            alt="Logo"
+            width="100"
+            height="auto"
+            style={{ objectFit: "contain" }}
+          />
         </Link>
 
-        {/* Toggler para móvil */}
+        {/* Botón hamburguesa (móvil) que despliega el menú colapsado */}
         <button
           className="navbar-toggler"
           type="button"
@@ -28,8 +43,9 @@ export default function Navbar({ cartCount = 0 }) {
           <span className="navbar-toggler-icon" />
         </button>
 
-        {/* Menú */}
+        {/* Contenedor colapsable del menú */}
         <div className="collapse navbar-collapse" id="wekNav">
+          {/* Menú de navegación principal (izquierda) */}
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <NavLink end to="/" className="nav-link">
@@ -48,12 +64,13 @@ export default function Navbar({ cartCount = 0 }) {
             </li>
           </ul>
 
-          {/* CTA Carrito (pill) */}
+          {/* Acción derecha: botón de Carrito con contador (pastilla) */}
           <NavLink
             to="/carrito"
             className="btn btn-outline-dark btn-sm rounded-pill px-3"
+            title="Ver carrito"
           >
-            Carrito ({cartCount})
+            Carrito ({Number(cartCount) || 0})
           </NavLink>
         </div>
       </div>

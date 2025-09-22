@@ -1,3 +1,5 @@
+/* ===== BrandShowcase: carrusel infinito de logos ===== */
+
 .brand-rail {
   position: relative;
   overflow: hidden;
@@ -34,22 +36,22 @@
   transform: scale(1.08);
 }
 
-/* Animación infinita hacia la izquierda */
+/* Loop infinito hacia la izquierda */
 @keyframes brand-scroll {
   0% {
     transform: translateX(0);
   }
   100% {
     transform: translateX(-50%);
-  } /* como duplicamos, -50% cierra el loop */
+  } /* duplicamos, -50% cierra el loop */
 }
 
-/* Pausa al pasar el mouse sobre la banda completa */
+/* Pausa al hover en toda la banda */
 .brand-rail:hover .brand-track {
   animation-play-state: paused;
 }
 
-/* Responsivo */
+/* Responsive */
 @media (max-width: 576px) {
   .brand-item {
     min-width: 120px;

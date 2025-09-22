@@ -1,9 +1,16 @@
-// src/pages/Contact.jsx
+// Página de contacto y envíos con layout de 3 columnas:
+// IZQ: info empresa/sucursales/cobertura
+// CENTRO: formulario de contacto (ContactForm)
+// DER: resumen del carrito (ContactCart)
+//
+// Nota: si llegas directo a /contacto (sin pasar por carrito),
+// tomamos el carrito desde localStorage (guardado por CartPage).
+
 import ContactForm from "../components/ContactForm.jsx";
 import ContactCart from "../components/ContactCart.jsx";
 
 export default function Contact({ cart = [], company }) {
-  // 1) Tomar del prop si viene; si no, intentamos localStorage
+  // 1) Carrito: preferimos prop `cart`; si viene vacío, leemos localStorage
   const cartFromLS = (() => {
     try {
       return JSON.parse(localStorage.getItem("cart") || "[]");
@@ -14,10 +21,10 @@ export default function Contact({ cart = [], company }) {
 
   const effectiveCart = Array.isArray(cart) && cart.length ? cart : cartFromLS;
 
-  // 2) Datos de empresa (permite override por prop 'company')
+  // 2) Datos base de la empresa (se pueden sobreescribir vía prop `company`)
   const COMPANY = {
     nombre: "Outdoor Gear Montalay (Maqueta)",
-    whatsappIntl: "56964344326",
+    whatsappIntl: "56964344326", // formato internacional sin '+'
     salesEmail: "molina.carrilo1996@gmail.com",
     telefonoFijo: "+56 2 2345 6789",
     horario: "Lun a Vie 10:00–19:00 · Sáb 10:00–14:00",
@@ -33,12 +40,13 @@ export default function Contact({ cart = [], company }) {
         telefono: "+56 9 2222 2222",
       },
     ],
-    ...(company || {}),
+    ...(company || {}), // merge con overrides si llegan por props
   };
 
   return (
     <section className="container my-5">
       <div className="row g-4 align-items-start">
+        {/* Encabezado de página */}
         <div className="col-12">
           <h1 className="mb-2">Contacto y Envíos</h1>
           <p className="lead">
@@ -47,7 +55,7 @@ export default function Contact({ cart = [], company }) {
           </p>
         </div>
 
-        {/* Layout 3 columnas: IZQ info · CENTRO form · DER carrito */}
+        {/* Columna izquierda: info de empresa, sucursales, cobertura */}
         <div className="col-12 col-lg-3">
           <div className="border rounded-4 p-3 mb-4">
             <h4 className="mb-3">{COMPANY.nombre}</h4>
@@ -93,15 +101,17 @@ export default function Contact({ cart = [], company }) {
           </div>
         </div>
 
+        {/* Columna central: formulario con acciones (WA / Email / Copiar) */}
         <div className="col-12 col-lg-6">
           <ContactForm cart={effectiveCart} company={COMPANY} />
         </div>
 
+        {/* Columna derecha: resumen del carrito (solo lectura) */}
         <div className="col-12 col-lg-3">
           <ContactCart cart={effectiveCart} />
         </div>
 
-        {/* Mapa (opcional) */}
+        {/* Mapa embebido (opcional) */}
         <div className="col-12">
           <div className="border rounded-4 overflow-hidden">
             <iframe
@@ -116,10 +126,11 @@ export default function Contact({ cart = [], company }) {
           </div>
         </div>
 
-        {/* FAQ */}
+        {/* Preguntas frecuentes */}
         <div className="col-12">
           <div className="border rounded-4 p-3">
             <h5 className="mb-3">Preguntas frecuentes</h5>
+
             <details className="mb-2">
               <summary className="fw-semibold">
                 ¿Cuánto cuesta el envío?
@@ -129,6 +140,7 @@ export default function Contact({ cart = [], company }) {
                 Email antes de cerrar el pedido.
               </div>
             </details>
+
             <details className="mb-2">
               <summary className="fw-semibold">
                 ¿Qué medios de pago aceptan?
@@ -137,6 +149,7 @@ export default function Contact({ cart = [], company }) {
                 Te enviaremos link de pago o datos para transferencia.
               </div>
             </details>
+
             <details className="mb-2">
               <summary className="fw-semibold">
                 ¿Puedo retirar en tienda?

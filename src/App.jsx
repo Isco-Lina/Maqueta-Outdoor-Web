@@ -1,26 +1,36 @@
 import { useState, useMemo, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
+// Componentes principales
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 
+// Páginas
 import Home from "./pages/Home.jsx";
 import Products from "./pages/Products.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import Contact from "./pages/Contact.jsx";
 
+// Datos (productos mockeados)
 import productsData from "./data/products.js";
+
+// Páginas por categoría
 import Infantil from "./pages/categories/Infantil.jsx";
 import PrimeraCapa from "./pages/categories/PrimeraCapa.jsx";
 import SegundaCapa from "./pages/categories/SegundaCapa.jsx";
 import TerceraCapa from "./pages/categories/TerceraCapa.jsx";
 import Accesorios from "./pages/categories/Accesorios.jsx";
-import Categories from "./pages/Categories.jsx";
+
+// Vista de todas las categorías
+import Categories from "./components/Categories.jsx";
 
 export default function App() {
-  // --- Estado del carrito (con carga inicial desde localStorage) ---
+  /* =============================
+     ESTADO DEL CARRITO
+     ============================= */
   const [cart, setCart] = useState(() => {
     try {
+      // Cargar carrito desde localStorage si existe
       const saved = localStorage.getItem("weke-cart");
       return saved ? JSON.parse(saved) : [];
     } catch {
@@ -28,20 +38,24 @@ export default function App() {
     }
   });
 
-  // Persistir carrito en localStorage
+  // Persistir carrito en localStorage cada vez que cambie
   useEffect(() => {
     localStorage.setItem("weke-cart", JSON.stringify(cart));
   }, [cart]);
 
-  // --- Acciones del carrito ---
+  /* =============================
+     ACCIONES DEL CARRITO
+     ============================= */
   const addToCart = (product) => {
     setCart((prev) => {
       const found = prev.find((i) => i.id === product.id);
       if (found) {
+        // Si ya existe, suma +1
         return prev.map((i) =>
           i.id === product.id ? { ...i, qty: i.qty + 1 } : i
         );
       }
+      // Si no existe, lo agrega con qty:1
       return [...prev, { ...product, qty: 1 }];
     });
   };
@@ -56,12 +70,13 @@ export default function App() {
 
   const clearCart = () => setCart([]);
 
-  // --- Derivados ---
+  /* =============================
+     DERIVADOS
+     ============================= */
+  // Cantidad total de items en el carrito
   const cartCount = useMemo(() => cart.reduce((s, i) => s + i.qty, 0), [cart]);
 
-  // --- Normalizar productsData a un array para /productos ---
-  //  - Si productsData ya es array, lo usa tal cual
-  //  - Si es objeto por categorías, lo aplana
+  // Normalizamos productsData a un array (puede venir como objeto por categorías)
   const allProducts = useMemo(() => {
     if (Array.isArray(productsData)) return productsData;
     if (productsData && typeof productsData === "object") {
@@ -70,51 +85,49 @@ export default function App() {
     return [];
   }, []);
 
+  /* =============================
+     RENDER PRINCIPAL
+     ============================= */
   return (
     <div className="d-flex flex-column min-vh-100">
-      {/* Navbar arriba */}
+      {/* Navbar fijo arriba con contador del carrito */}
       <Navbar cartCount={cartCount} />
 
-      {/* Main crece para empujar el footer hacia abajo */}
+      {/* Contenido principal (flex-grow para empujar el footer) */}
       <main className="container my-4 flex-grow-1">
         <Routes>
+          {/* Inicio */}
           <Route path="/" element={<Home />} />
 
-          {/* Página general de productos (recibe SIEMPRE un array) */}
+          {/* Página general de productos */}
           <Route
             path="/productos"
             element={<Products products={allProducts} addToCart={addToCart} />}
           />
 
-          {/* Categoría: Línea Infantil */}
+          {/* Rutas por categoría */}
           <Route
             path="/productos/infantil"
             element={<Infantil addToCart={addToCart} />}
           />
-
-          {/* Categoría: Primera Capa */}
           <Route
             path="/productos/primera-capa"
             element={<PrimeraCapa addToCart={addToCart} />}
           />
-
-          {/* Categoría: Segunda Capa */}
           <Route
             path="/productos/segunda-capa"
             element={<SegundaCapa addToCart={addToCart} />}
           />
-          {/* Categoría: Tercera Capa */}
           <Route
             path="/productos/tercera-capa"
             element={<TerceraCapa addToCart={addToCart} />}
           />
-          {/* Categoría: Accesorios */}
           <Route
             path="/productos/accesorios"
             element={<Accesorios addToCart={addToCart} />}
           />
 
-          {/* Página de categorías */}
+          {/* Vista de categorías */}
           <Route path="/categorias" element={<Categories />} />
 
           {/* Carrito */}

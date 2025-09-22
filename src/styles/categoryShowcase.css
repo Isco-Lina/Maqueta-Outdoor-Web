@@ -1,16 +1,17 @@
-/* Zoom suave de la imagen de fondo: usamos transform en el elemento contenedor */
+/* ===== CategoryShowcase (tiles del home) ===== */
+
+/* Zoom suave de la imagen de fondo */
 .tile-card {
-  transform: translateZ(0); /* habilita aceleración */
+  transform: translateZ(0);
   transition: transform 0.45s ease, box-shadow 0.45s ease;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
-
 .tile-card:hover {
   transform: scale(1.02);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
 }
 
-/* intensificar overlay al hover (más contraste) */
+/* Intensificar overlay al hover (más contraste) */
 .tile-card:hover > div:first-child {
   background: linear-gradient(
     to bottom,
@@ -19,7 +20,8 @@
   );
 }
 
+/* Overlay usado también en categorías */
 .cat-overlay {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.35));
-  pointer-events: none; /* 👈 clave para que el Link reciba el click */
+  pointer-events: none; /* Link clickeable */
 }

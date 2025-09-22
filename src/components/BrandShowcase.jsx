@@ -1,10 +1,14 @@
 import "../styles/brandShowcase.css";
 
 /**
- * Carrusel infinito de logos (autoscroll) sin librerías.
- * - Duplicamos la lista para un loop continuo.
- * - Hover: logo pasa de gris a color y aumenta levemente.
- * - Compatible con touch (sin hover no pasa nada raro).
+ * BrandShowcase.jsx
+ * -----------------
+ * Carrusel infinito de logos de marcas, hecho con CSS y duplicando los ítems.
+ *
+ * - brands: lista base de logos (con alt y src).
+ * - loop: se crea duplicando la lista para lograr efecto de scroll infinito.
+ * - Cada logo se muestra dentro de un contenedor `.brand-item`.
+ * - Los estilos en brandShowcase.css manejan la animación de autoscroll.
  */
 const brands = [
   { alt: "WEKE", src: "/images/brands/logo-weke.png" },
@@ -15,11 +19,12 @@ const brands = [
 ];
 
 export default function BrandShowcase() {
-  // duplicamos para el efecto “loop”
+  // Duplicamos la lista para que al llegar al final se repita sin cortes
   const loop = [...brands, ...brands];
 
   return (
     <section className="container my-5">
+      {/* Título centrado */}
       <div className="text-center mb-3">
         <h2 className="m-0">Marcas que nos acompañan</h2>
         <p className="text-muted m-0">
@@ -27,10 +32,12 @@ export default function BrandShowcase() {
         </p>
       </div>
 
+      {/* Rail con animación de scroll horizontal */}
       <div className="brand-rail rounded-4">
         <div className="brand-track">
           {loop.map((b, i) => (
             <div className="brand-item" key={b.alt + i} aria-label={b.alt}>
+              {/* Logo individual */}
               <img src={b.src} alt={b.alt} loading="lazy" />
             </div>
           ))}

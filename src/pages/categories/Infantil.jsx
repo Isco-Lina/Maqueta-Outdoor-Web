@@ -4,9 +4,10 @@ import ProductGrid from "../../components/ProductGrid.jsx";
 import QuickViewModal from "../../components/QuickViewModal.jsx";
 
 export default function Infantil({ addToCart }) {
+  // Lista específica de "infantil"
   const productos = productsData.infantil || [];
 
-  // ---- Modal state ----s
+  // Estado del modal
   const [showModal, setShowModal] = useState(false);
   const [selected, setSelected] = useState(null);
 
