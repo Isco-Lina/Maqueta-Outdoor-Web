@@ -34,11 +34,9 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
     }
   }, [items]);
 
-  // Cambiar cantidad con mínimo 1
-  const onChangeQty = (id, value) => {
-    const v = Math.max(1, Number(value) || 1);
-    setQty(id, v);
-  };
+  // Helpers para sumar/restar cantidad con mínimo 1
+  const dec = (id, current) => setQty(id, Math.max(1, Number(current) - 1));
+  const inc = (id, current) => setQty(id, Number(current) + 1);
 
   // CTA que navega a la página de contacto
   const goContact = () => {
@@ -89,14 +87,33 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
               </div>
             </div>
 
-            {/* Control de cantidad */}
-            <input
-              type="number"
-              min="1"
-              className="form-control w-auto"
-              value={item.qty}
-              onChange={(e) => onChangeQty(item.id, e.target.value)}
-            />
+            {/* Stepper de cantidad (±) */}
+            <div className="d-flex align-items-center gap-2">
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-sm rounded-circle"
+                aria-label={`Disminuir cantidad de ${item.name}`}
+                onClick={() => dec(item.id, item.qty)}
+                disabled={item.qty <= 1}
+              >
+                −
+              </button>
+              <span
+                className="px-2 text-center"
+                style={{ minWidth: 24, fontWeight: 600 }}
+                aria-live="polite"
+              >
+                {item.qty}
+              </span>
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-sm rounded-circle"
+                aria-label={`Aumentar cantidad de ${item.name}`}
+                onClick={() => inc(item.id, item.qty)}
+              >
+                +
+              </button>
+            </div>
 
             {/* Quitar ítem */}
             <button
