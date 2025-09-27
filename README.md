@@ -1,50 +1,80 @@
-# 🏔️ Outdoor Gear – Maqueta Web
+# 🌄 Tienda Outdoor
 
-Este proyecto es una **maqueta funcional de un e-commerce en React** diseñada para una tienda ficticia de ropa y equipamiento outdoor.  
-El objetivo fue **aprender y mostrar cómo construir una web moderna con React**: navegación, filtros de productos, carrito, y contacto para coordinar pedidos.
-
----
-
-## ✨ Funcionalidades principales
-
-### 🛒 Productos
-
-- Catálogo de ropa y accesorios **por categorías**: Hombre, Mujer, Niños y Bebés, Equipamiento.
-- **Filtros avanzados**: por categoría, rango de precios y búsqueda por palabra clave.
-- **Ordenamiento dinámico**: A–Z, precio menor–mayor, etc.
-
-### 🧾 Carrito
-
-- Agregar productos con cantidades y variantes.
-- Modificar cantidades o quitar ítems.
-- Ver total actualizado en todo momento.
-- **Botón "Coordinar despacho"** → lleva a la sección de contacto para finalizar pedido.
-
-### 📬 Contacto
-
-- Formulario para ingresar datos personales, dirección y notas.
-- **Resumen del carrito integrado** (se pasa desde la página de Carrito).
-- Opciones de envío del pedido:
-  - 📱 **WhatsApp**: abre chat con el detalle del pedido.
-  - 📧 **Email**: abre cliente de correo con el pedido ya listo.
-  - 📋 **Copiar detalle**: copia al portapapeles para compartir manualmente.
-- Información de la empresa, sucursales, cobertura de envíos y FAQ.
-
-### 🗺️ Extra
-
-- Mapa embebido con ubicación.
-- Layout **responsive y moderno** con Bootstrap.
+Este proyecto es una **maqueta funcional de e-commerce para equipamiento y ropa outdoor**, desarrollado con **React + Vite + Bootstrap 5**.  
+Incluye catálogo de productos, carrito persistente en `localStorage`, filtros por categorías/subcategorías, vista rápida (modal), y formulario de contacto integrado con WhatsApp/Email.
 
 ---
 
-## 🚀 Tecnologías utilizadas
+## 🚀 Tecnologías usadas
 
-- [React 18](https://react.dev/) con Vite.
-- [React Router](https://reactrouter.com/) para navegación entre páginas.
-- **Bootstrap 5** para diseño responsivo.
-- JavaScript moderno (ES2023).
-- `localStorage` para persistencia del carrito entre páginas.
+- **React 18** (componentes funcionales + hooks)
+- **Vite** (bundler rápido, soporte para alias)
+- **React Router DOM** (ruteo SPA con query params)
+- **Bootstrap 5** (grilla, componentes responsivos)
+- **CSS personalizados** (hero, categorías, brand showcase)
+- **LocalStorage** (persistencia del carrito)
 
-  ```
+---
 
-  ```
+## 📂 Estructura del proyecto
+
+```
+src/
+ ├─ components/        # Componentes reutilizables
+ │   ├─ Nav/           # Navbar
+ │   ├─ Footer/        # Footer
+ │   ├─ Products/      # ProductCard, ProductGrid, QuickViewModal
+ │   ├─ Hero/          # HeroCarousel
+ │   ├─ Categories/    # CategoryShowcase, Categories
+ │   └─ CarruselBrand/ # BrandShowcase
+ ├─ hooks/             # useCart (manejo de carrito con localStorage)
+ ├─ pages/             # Vistas principales (Home, Productos, Contacto, etc.)
+ │   └─ categories/    # Redirecciones de categorías → productos
+ ├─ styles/            # Archivos CSS personalizados
+ ├─ data/              # Productos mockeados
+ └─ utils/             # Funciones helper (orderMessage, etc.)
+```
+
+---
+
+## ⚙️ Instalación y uso
+
+1. **Clonar el repositorio**
+
+   ```bash
+   git clone https://github.com/usuario/maqueta-outdoor.git
+   cd maqueta-outdoor
+   ```
+
+2. **Instalar dependencias**
+
+   ```bash
+   npm install
+   ```
+
+3. **Levantar en desarrollo**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Build de producción**
+   ```bash
+   npm run build
+   npm run preview
+   ```
+
+---
+
+## 📌 Funcionalidades principales
+
+- ✅ Catálogo de productos con filtros dinámicos (`?aud=`, `?cat=`, `?subcat=`, `?sortBy=`, `?q=`).
+- ✅ Carrito de compras persistente (se guarda en `localStorage`).
+- ✅ Vista rápida de producto (modal con “Agregar al carrito”).
+- ✅ Formulario de contacto que genera el detalle del carrito y permite:
+  - Enviar por **WhatsApp**
+  - Enviar por **Email**
+  - Copiar detalle al portapapeles
+- ✅ Diseño responsivo, probado en móvil (ej: Samsung S23).
+
+---
