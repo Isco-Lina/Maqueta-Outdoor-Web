@@ -111,7 +111,7 @@ export default function Filters({ current, onChange }) {
       <div className="row g-3 align-items-end">
         {/* Audiencia */}
         <div className="col-6 col-md-3">
-          <label className="form-label">Audiencia</label>
+          <label className="form-label">Público</label>
           <select
             className="form-select"
             value={current.aud}
