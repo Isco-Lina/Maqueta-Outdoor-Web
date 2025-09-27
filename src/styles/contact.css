@@ -1,0 +1,32 @@
+/* Tarjeta del formulario */
+.form-card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+}
+
+/* Títulos de sección dentro del form */
+.section-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280; /* gris medio */
+  margin-bottom: 0.35rem;
+}
+
+/* Separador visual suave */
+.divider {
+  border-color: rgba(0, 0, 0, 0.07);
+  margin: 16px 0;
+}
+
+/* Afinar input-group visual */
+.input-group-text {
+  background: #f3f4f6;
+  border-right: 0;
+}
+.input-group .form-control {
+  border-left: 0;
+}
+
+/* En mobile todo full-width; en md/ lg ya segmenta por columnas desde Bootstrap */

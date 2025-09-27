@@ -1,15 +1,11 @@
 // Página de Productos: aplica filtros + orden + quick view.
-// Recibe 'products' (array u objeto) y 'addToCart' como props.
 
 import { useMemo, useCallback, useState } from "react";
-import Filters from "../components/Filters.jsx";
-import ProductGrid from "../components/ProductGrid.jsx";
-import QuickViewModal from "../components/QuickViewModal.jsx";
+import Filters from "../components/Products/Filters.jsx";
+import ProductGrid from "../components/Products/ProductGrid.jsx";
+import QuickViewModal from "../components/Products/QuickViewModal.jsx";
 
 export default function Products({ products, addToCart }) {
-  // Normaliza 'products' a una lista.
-  // - Si viene un array, lo usamos tal cual.
-  // - Si viene un objeto indexado por categorías, aplanamos sus arrays.
   const list = useMemo(() => {
     if (Array.isArray(products)) return products;
     if (products && typeof products === "object")
@@ -17,10 +13,9 @@ export default function Products({ products, addToCart }) {
     return [];
   }, [products]);
 
-  // Estado de filtros globales para la página.
-  // 'aud' (audiencia) se obtiene desde la URL dentro de <Filters /> y se refleja aquí.
   const [flt, setFlt] = useState({
     cat: "all",
+    subcat: "all", // <--- NUEVO
     min: 0,
     max: Infinity,
     keyword: "",
@@ -28,17 +23,14 @@ export default function Products({ products, addToCart }) {
     aud: "all",
   });
 
-  // Se lo pasamos a <Filters />; éste nos devuelve el objeto final de filtros.
   const handleChange = useCallback((next) => setFlt(next), []);
 
-  // Normalizador: quita tildes y pasa a minúsculas para buscar de forma tolerante.
   const normalize = (s = "") =>
     s
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
 
-  // Cálculo principal: filtra y ordena en memoria
   const filtered = useMemo(() => {
     const min = Number(flt.min) || 0;
     const max = Number(flt.max) || Infinity;
@@ -48,24 +40,31 @@ export default function Products({ products, addToCart }) {
       // 1) categoría
       const okCat = flt.cat === "all" ? true : p.category === flt.cat;
 
-      // 2) audiencia (publico objetivo). Ajusta el campo según tus datos reales.
-      const audField = normalize(p.audience || p.gender || p.segment || "");
-      const okAud = flt.aud === "all" ? true : audField === normalize(flt.aud);
+      // 2) subcategoría (solo si hay filtro y el producto la tiene)
+      const okSub =
+        flt.subcat === "all" ? true : p.subcat && p.subcat === flt.subcat;
 
-      // 3) precio (entre min y max)
+      // 3) audiencia (permite unisex)
+      const audField = normalize(p.audience || p.gender || p.segment || "");
+      const okAud =
+        flt.aud === "all"
+          ? true
+          : audField === normalize(flt.aud) || audField === "unisex";
+
+      // 4) precio
       const price = Number(p.price) || 0;
       const okPrice = price >= min && price <= max;
 
-      // 4) palabra clave (nombre, marca y categoría)
+      // 5) keyword
       const haystack = normalize(
-        [p.name, p.brand, p.category].filter(Boolean).join(" ")
+        [p.name, p.brand, p.category, p.subcat].filter(Boolean).join(" ")
       );
       const okKw = kw ? haystack.includes(kw) : true;
 
-      return okCat && okAud && okPrice && okKw;
+      return okCat && okSub && okAud && okPrice && okKw;
     });
 
-    // Ordenamiento según selección
+    // Orden
     switch (flt.sortBy) {
       case "priceAsc":
         out = out.slice().sort((a, b) => (a.price || 0) - (b.price || 0));
@@ -82,7 +81,6 @@ export default function Products({ products, addToCart }) {
         break;
       case "relevance":
       default:
-        // Relevancia simple cuando hay keyword: prioriza coincidencias al inicio del nombre/marca
         if (kw) {
           const score = (p) => {
             const n = normalize(p.name || "");
@@ -100,11 +98,9 @@ export default function Products({ products, addToCart }) {
     return out;
   }, [list, flt]);
 
-  // ---- Estado del modal "vista rápida" ----
   const [showModal, setShowModal] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  // Abre/cierra modal con el producto seleccionado
   const openQuick = (prod) => {
     setSelected(prod);
     setShowModal(true);
@@ -113,23 +109,19 @@ export default function Products({ products, addToCart }) {
 
   return (
     <>
-      <h1 className="mb-3">Nuestra linea de productos</h1>
+      <h1 className="mb-3">Nuestra línea de productos</h1>
       <p className="lead mb-3">
-        Elije entre una amplia variedad de productos para tus aventuras al aire
-        libre.
+        Elige por categoría y subcategoría para encontrar lo que necesitas.
       </p>
 
-      {/* Pasamos el estado actual para que Filters muestre los valores seleccionados */}
       <Filters onChange={handleChange} current={flt} />
 
-      {/* Grilla de productos ya filtrados/ordenados */}
       <ProductGrid
         products={filtered}
         addToCart={addToCart}
         onQuickView={openQuick}
       />
 
-      {/* Modal de vista rápida (controlado) */}
       <QuickViewModal
         show={showModal}
         product={selected}

@@ -1,11 +1,107 @@
-/* ===== Footer (íconos sociales) ===== */
+/* ============================
+   ALT FOOTER
+   ============================ */
 
-.social-icon {
-  width: 28px;
-  height: 28px;
-  transition: transform 0.2s ease, filter 0.2s ease;
+.alt-footer {
+  background: #0f141a;
+  color: #f5f7fa;
+  text-align: center;
+  padding: 60px 20px 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.social-icon:hover {
-  transform: scale(1.1);
+/* Top section */
+.alt-footer-top {
+  margin-bottom: 40px;
+}
+.alt-footer-logo {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 12px;
+  object-fit: contain;
+}
+.alt-footer-brand {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.03em;
+}
+.alt-footer-tagline {
+  font-size: 1rem;
+  color: #c7d0da;
+  max-width: 540px;
+  margin: 10px auto 0;
+  line-height: 1.4;
+}
+
+/* Bottom section */
+.alt-footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.alt-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.alt-link {
+  color: #f5f7fa;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.alt-link:hover,
+.alt-link:focus-visible {
+  color: #4cb1ff;
+  text-decoration: underline;
+}
+
+.alt-socials {
+  display: flex;
+  gap: 16px;
+}
+.alt-social {
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
+  transition: transform 0.2s;
+}
+.alt-social:hover,
+.alt-social:focus-visible {
+  transform: scale(1.15);
+}
+
+.alt-copy {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.brand-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.alt-footer-logo-inline {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+/* Responsive */
+@media (max-width: 575.98px) {
+  .alt-footer {
+    padding: 40px 16px 24px;
+  }
+  .alt-footer-brand {
+    font-size: 1.4rem;
+  }
+  .alt-footer-tagline {
+    font-size: 0.95rem;
+  }
 }

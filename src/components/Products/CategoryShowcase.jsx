@@ -1,13 +1,15 @@
-// CategoryShowcase.jsx
-// --------------------
-// Grid de 4 tarjetas destacadas en el home (Hombre, Mujer, Niños, Equipamiento).
-// Cada tarjeta navega a /productos con query params.
-// Usa un mapeo similar al de Categories.jsx para mantener consistencia.
-
+/**
+ * Componente: CategoryShowcase
+ * Propósito: Cuadrícula de 4 tarjetas destacadas en Home que navegan a /productos usando query params.
+ * Navegación: <Link> a rutas internas con ?aud= / ?cat= dependiendo del "slug".
+ * Notas:
+ * - Usa estilos en categoryShowcase.css (altura, overlay, tipografía).
+ * - El mapeo de slug -> URL está centralizado en linkFor() para mantener consistencia.
+ */
 import { Link } from "react-router-dom";
-import "../styles/categoryShowcase.css";
+import "../../styles/categoryShowcase.css"; // o: import "@styles/categoryShowcase.css";
 
-// Definición estática de tiles principales
+// 1) Definición estática de tiles principales (pueden extraerse a @data si lo prefieres)
 const tiles = [
   { title: "Hombre", img: "/images/categories/hombre.png", slug: "hombre" },
   { title: "Mujer", img: "/images/categories/mujer.png", slug: "mujer" },
@@ -23,31 +25,40 @@ const tiles = [
   },
 ];
 
-// Función auxiliar que devuelve el link según el slug
+// 2) Auxiliar que devuelve el link final según el slug
 const linkFor = (slug) => {
   const s = String(slug).toLowerCase();
+
+  // Audiencias
   if (s === "hombre") return "/productos?aud=hombre";
   if (s === "mujer") return "/productos?aud=mujer";
-  if (["infantil", "niños", "ninos", "bebés", "bebes"].includes(s))
-    return "/productos?aud=infantil";
-  if (["equipamiento", "accesorios"].includes(s))
+
+  // Infantil: OJO de coherencia con el resto del sitio (usa "ninos" como aud si así lo definiste en Products/Filters)
+  if (["infantil", "niños", "ninos", "bebés", "bebes"].includes(s)) {
+    return "/productos?aud=ninos"; // <- usa "ninos" (sin tilde) para ser consistente con Filters.jsx
+  }
+
+  // Equipamiento/Accesorios
+  if (["equipamiento", "accesorios"].includes(s)) {
     return "/productos?cat=accesorios";
-  // fallback genérico
+  }
+
+  // Fallback genérico (no debería ocurrir en estos 4 tiles)
   return `/productos?categoria=${encodeURIComponent(s)}`;
 };
 
 export default function CategoryShowcase() {
   return (
     <section className="container my-5">
-      {/* Título y link a la página de categorías */}
+      {/* Título y CTA a /categorias */}
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2 className="m-0">Elige algunas de nuestras categoría</h2>
+        <h2 className="m-0">Elige algunas de nuestras categorías</h2>
         <Link className="text-decoration-none" to="/categorias">
           Ver todo →
         </Link>
       </div>
 
-      {/* Grilla responsiva con 4 tiles */}
+      {/* Grilla responsiva (4 tiles) */}
       <div className="row g-4">
         {tiles.map(({ title, img, slug }) => (
           <div key={slug} className="col-12 col-md-6 col-lg-3">
@@ -59,7 +70,11 @@ export default function CategoryShowcase() {
   );
 }
 
-// Tarjeta individual clickeable
+/**
+ * Subcomponente: TileCard
+ * Propósito: Tarjeta clickeable con imagen de fondo, overlay y CTA visual.
+ * Accesibilidad: aria-label describe la acción del vínculo.
+ */
 function TileCard({ title, img, to }) {
   return (
     <Link
@@ -74,14 +89,14 @@ function TileCard({ title, img, to }) {
       }}
       aria-label={`Ver colección ${title}`}
     >
-      {/* Overlay degradado para contraste */}
+      {/* Overlay para mejorar contraste del texto */}
       <div
         className="position-absolute top-0 start-0 w-100 h-100"
         style={{
           background:
             "linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35))",
           transition: "background .3s ease",
-          pointerEvents: "none", // deja el link clickeable
+          pointerEvents: "none", // mantiene el Link clickeable
         }}
       />
 
@@ -94,7 +109,7 @@ function TileCard({ title, img, to }) {
           {title}
         </h3>
 
-        {/* Botón decorativo (no bloquea el click) */}
+        {/* Botón decorativo (no captura el click) */}
         <span
           className="btn btn-light mt-3 px-4 py-2 rounded-pill"
           style={{

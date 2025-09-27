@@ -1,0 +1,63 @@
+/* Contenedor full width fuera del .container para no recortar los lados */
+.hero-carousel-wrap {
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+/* Altura responsiva del hero */
+#heroCarousel,
+#heroCarousel .carousel-item {
+  height: clamp(360px, 45vw, 680px);
+}
+
+/* Imagen que no se deforma y siempre rellena vertical: se ve COMPLETA en alto */
+.hero-slide-img {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+/* Overlay para legibilidad */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.55) 70%
+  );
+}
+
+/* Tarjeta de texto con glassmorphism */
+.hero-caption-card {
+  /* backdrop-filter: blur(8px); */
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: clamp(12px, 2.5vw, 24px);
+}
+
+#heroCarousel .carousel-caption {
+  left: max(2rem, 6%);
+  right: auto;
+  bottom: clamp(1rem, 6vw, 3rem);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+/* Indicadores más visibles */
+#heroCarousel .carousel-indicators [data-bs-target] {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+}
+
+/* Ajuste móvil */
+@media (max-width: 575.98px) {
+  #heroCarousel .carousel-caption {
+    left: 1rem;
+    right: 1rem;
+  }
+  .hero-slide-img {
+    object-position: 50% 50%;
+  }
+}

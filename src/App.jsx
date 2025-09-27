@@ -1,18 +1,22 @@
-import { useState, useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // Componentes principales
-import Navbar from "./components/Navbar.jsx";
-import Footer from "./components/Footer.jsx";
+import Navbar from "./components/Nav/Navbar.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 
 // Páginas
 import Home from "./pages/Home.jsx";
 import Products from "./pages/Products.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import Contact from "./pages/Contact.jsx";
+import Ubicacion from "./pages/Ubicacion.jsx";
 
 // Datos (productos mockeados)
 import productsData from "./data/products.js";
+
+// Hook de carrito
+import useCart from "./hooks/useCart.js";
 
 // Páginas por categoría
 import Infantil from "./pages/categories/Infantil.jsx";
@@ -22,61 +26,13 @@ import TerceraCapa from "./pages/categories/TerceraCapa.jsx";
 import Accesorios from "./pages/categories/Accesorios.jsx";
 
 // Vista de todas las categorías
-import Categories from "./components/Categories.jsx";
+import Categories from "./components/Products/Categories.jsx";
 
 export default function App() {
-  /* =============================
-     ESTADO DEL CARRITO
-     ============================= */
-  const [cart, setCart] = useState(() => {
-    try {
-      // Cargar carrito desde localStorage si existe
-      const saved = localStorage.getItem("weke-cart");
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  // Carrito desde hook
+  const { cart, add, remove, setQty, clear, count } = useCart();
 
-  // Persistir carrito en localStorage cada vez que cambie
-  useEffect(() => {
-    localStorage.setItem("weke-cart", JSON.stringify(cart));
-  }, [cart]);
-
-  /* =============================
-     ACCIONES DEL CARRITO
-     ============================= */
-  const addToCart = (product) => {
-    setCart((prev) => {
-      const found = prev.find((i) => i.id === product.id);
-      if (found) {
-        // Si ya existe, suma +1
-        return prev.map((i) =>
-          i.id === product.id ? { ...i, qty: i.qty + 1 } : i
-        );
-      }
-      // Si no existe, lo agrega con qty:1
-      return [...prev, { ...product, qty: 1 }];
-    });
-  };
-
-  const removeFromCart = (id) =>
-    setCart((prev) => prev.filter((i) => i.id !== id));
-
-  const setQty = (id, qty) =>
-    setCart((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, qty: Math.max(1, qty) } : i))
-    );
-
-  const clearCart = () => setCart([]);
-
-  /* =============================
-     DERIVADOS
-     ============================= */
-  // Cantidad total de items en el carrito
-  const cartCount = useMemo(() => cart.reduce((s, i) => s + i.qty, 0), [cart]);
-
-  // Normalizamos productsData a un array (puede venir como objeto por categorías)
+  // Productos normalizados
   const allProducts = useMemo(() => {
     if (Array.isArray(productsData)) return productsData;
     if (productsData && typeof productsData === "object") {
@@ -85,70 +41,57 @@ export default function App() {
     return [];
   }, []);
 
-  /* =============================
-     RENDER PRINCIPAL
-     ============================= */
   return (
     <div className="d-flex flex-column min-vh-100">
-      {/* Navbar fijo arriba con contador del carrito */}
-      <Navbar cartCount={cartCount} />
+      <Navbar cartCount={count} />
 
-      {/* Contenido principal (flex-grow para empujar el footer) */}
       <main className="container my-4 flex-grow-1">
         <Routes>
-          {/* Inicio */}
           <Route path="/" element={<Home />} />
-
-          {/* Página general de productos */}
           <Route
             path="/productos"
-            element={<Products products={allProducts} addToCart={addToCart} />}
+            element={<Products products={allProducts} addToCart={add} />}
           />
-
-          {/* Rutas por categoría */}
           <Route
             path="/productos/infantil"
-            element={<Infantil addToCart={addToCart} />}
+            element={<Infantil addToCart={add} />}
           />
           <Route
             path="/productos/primera-capa"
-            element={<PrimeraCapa addToCart={addToCart} />}
+            element={<PrimeraCapa addToCart={add} />}
           />
           <Route
             path="/productos/segunda-capa"
-            element={<SegundaCapa addToCart={addToCart} />}
+            element={<SegundaCapa addToCart={add} />}
           />
           <Route
             path="/productos/tercera-capa"
-            element={<TerceraCapa addToCart={addToCart} />}
+            element={<TerceraCapa addToCart={add} />}
           />
           <Route
             path="/productos/accesorios"
-            element={<Accesorios addToCart={addToCart} />}
+            element={<Accesorios addToCart={add} />}
           />
 
-          {/* Vista de categorías */}
           <Route path="/categorias" element={<Categories />} />
 
-          {/* Carrito */}
           <Route
             path="/carrito"
             element={
               <CartPage
                 cart={cart}
-                removeFromCart={removeFromCart}
+                removeFromCart={remove}
                 setQty={setQty}
-                clearCart={clearCart}
+                clearCart={clear}
               />
             }
           />
-
-          {/* Contacto */}
           <Route path="/contacto" element={<Contact cart={cart} />} />
+
+          <Route path="/ubicacion" element={<Ubicacion cart={cart} />} />
         </Routes>
       </main>
 
-      {/* Footer siempre abajo */}
       <Footer />
     </div>
   );

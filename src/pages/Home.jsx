@@ -1,17 +1,17 @@
-// 1) Hero (cabecera visual con imagen + CTAs)
-// 2) CategoryShowcase (categorías destacadas)
-// 3) BrandShowcase (marcas con carrusel infinito)
-
-import Hero from "../components/Hero.jsx";
-import CategoryShowcase from "../components/CategoryShowcase.jsx";
-import BrandShowcase from "../components/BrandShowcase.jsx";
+// src/pages/Home.jsx
+import HeroCarousel from "../components/Hero/HeroCarousel.jsx";
+import BrandShowcase from "../components/CarruselBrand/BrandShowcase.jsx";
+import Categories from "../components/Products/Categories.jsx";
 
 export default function Home() {
   return (
     <>
-      <Hero />
-      <CategoryShowcase />
+      {/* HERO tipo carousel */}
+      <HeroCarousel />
+      {/* Carrusel infinito de logos de marcas */}
       <BrandShowcase />
+      {/* Sección de categorías (audiencias + subcategorías) */}
+      <Categories />
     </>
   );
 }

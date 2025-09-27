@@ -1,20 +1,24 @@
-// ProductCard.jsx
-// ---------------
-// Tarjeta individual de producto para usar dentro de una grilla.
-// Props:
-// - product: objeto { id, name, img, price, description, ... }
-// - addToCart(product): callback para agregar al carrito
-// - onQuickView(product): callback para abrir el modal de "Vista rápida"
-
+/**
+ * Componente: ProductCard
+ * Propósito: Tarjeta individual de producto con imagen, nombre, descripción, precio y acciones.
+ * Entradas:
+ *  - product: { id, name, description, img, price, ... }
+ *  - addToCart(product): agrega el producto al carrito
+ *  - onQuickView(product): abre modal de vista rápida
+ * Notas:
+ *  - Usa utilidades Bootstrap y clases personalizadas (product-card/product-img).
+ *  - El contenedor de imagen es clickeable para abrir QuickView.
+ */
 export default function ProductCard({ product, addToCart, onQuickView }) {
   return (
     <div className="col">
       <article className="card h-100 product-card">
-        {/* Imagen / media del producto; click abre "vista rápida" */}
+        {/* Media: al clicar abre QuickView */}
         <div
           className="product-media"
           onClick={() => onQuickView?.(product)}
           role="button"
+          aria-label={`Vista rápida de ${product?.name ?? "producto"}`}
         >
           <img
             loading="lazy"
@@ -24,14 +28,13 @@ export default function ProductCard({ product, addToCart, onQuickView }) {
           />
         </div>
 
-        {/* Cuerpo de la card: nombre, descripción, precio y acciones */}
+        {/* Body */}
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">{product.name}</h5>
           <p className="card-text small text-muted">{product.description}</p>
 
-          {/* Pie de la card: precio + botones (ver / agregar) */}
+          {/* Footer de la card: precio + acciones */}
           <div className="mt-auto d-flex justify-content-between align-items-center gap-2">
-            {/* Precio en CLP (formateado) con fallback simple */}
             <strong>
               {product.price?.toLocaleString?.("es-CL", {
                 style: "currency",
@@ -41,20 +44,20 @@ export default function ProductCard({ product, addToCart, onQuickView }) {
             </strong>
 
             <div className="d-flex gap-2">
-              {/* Vista rápida (abre modal) */}
               <button
                 type="button"
                 className="btn btn-outline-secondary btn-sm rounded-pill"
                 onClick={() => onQuickView?.(product)}
+                aria-label={`Ver rápido ${product.name}`}
               >
                 Ver
               </button>
 
-              {/* Agregar al carrito */}
               <button
                 type="button"
                 className="btn btn-primary btn-sm rounded-pill"
                 onClick={() => addToCart(product)}
+                aria-label={`Agregar ${product.name} al carrito`}
               >
                 Agregar
               </button>

@@ -1,15 +1,14 @@
-import "../styles/brandShowcase.css";
-
 /**
- * BrandShowcase.jsx
- * -----------------
- * Carrusel infinito de logos de marcas, hecho con CSS y duplicando los ítems.
- *
- * - brands: lista base de logos (con alt y src).
- * - loop: se crea duplicando la lista para lograr efecto de scroll infinito.
- * - Cada logo se muestra dentro de un contenedor `.brand-item`.
- * - Los estilos en brandShowcase.css manejan la animación de autoscroll.
+ * Componente: BrandShowcase
+ * Propósito: Mostrar un carrusel/“marquee” infinito de marcas con animación CSS.
+ * Entrada: (ninguna por ahora) usa una lista embebida de { alt, src }.
+ * Notas:
+ * - Se duplica la lista (`loop`) para simular scroll infinito sin cortes.
+ * - La animación y el overflow los maneja `brandShowcase.css`.
+ * - Accesibilidad: aria-label por ítem; considerar reduced-motion en CSS.
  */
+import "../../styles/brandShowcase.css"; // o: import "@styles/brandShowcase.css";
+
 const brands = [
   { alt: "WEKE", src: "/images/brands/logo-weke.png" },
   { alt: "Patagonia", src: "/images/brands/patagonia.jpg" },
@@ -19,12 +18,12 @@ const brands = [
 ];
 
 export default function BrandShowcase() {
-  // Duplicamos la lista para que al llegar al final se repita sin cortes
+  // Duplicamos la lista para que, al terminar, continúe sin “salto”.
   const loop = [...brands, ...brands];
 
   return (
     <section className="container my-5">
-      {/* Título centrado */}
+      {/* Encabezado */}
       <div className="text-center mb-3">
         <h2 className="m-0">Marcas que nos acompañan</h2>
         <p className="text-muted m-0">
@@ -32,12 +31,11 @@ export default function BrandShowcase() {
         </p>
       </div>
 
-      {/* Rail con animación de scroll horizontal */}
+      {/* Pista con desplazamiento horizontal continuo (ver CSS) */}
       <div className="brand-rail rounded-4">
         <div className="brand-track">
           {loop.map((b, i) => (
             <div className="brand-item" key={b.alt + i} aria-label={b.alt}>
-              {/* Logo individual */}
               <img src={b.src} alt={b.alt} loading="lazy" />
             </div>
           ))}
