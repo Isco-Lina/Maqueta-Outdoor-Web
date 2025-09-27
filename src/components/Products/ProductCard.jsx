@@ -8,6 +8,7 @@
  * Notas:
  *  - Usa utilidades Bootstrap y clases personalizadas (product-card/product-img).
  *  - El contenedor de imagen es clickeable para abrir QuickView.
+ *  - Ajustado para móviles: el footer hace wrap si no cabe (precio en una fila y botones abajo).
  */
 export default function ProductCard({ product, addToCart, onQuickView }) {
   return (
@@ -34,8 +35,9 @@ export default function ProductCard({ product, addToCart, onQuickView }) {
           <p className="card-text small text-muted">{product.description}</p>
 
           {/* Footer de la card: precio + acciones */}
-          <div className="mt-auto d-flex justify-content-between align-items-center gap-2">
-            <strong>
+          <div className="mt-auto d-flex align-items-center gap-2 flex-wrap">
+            {/* Precio: ocupa fila propia si no cabe */}
+            <strong className="me-auto">
               {product.price?.toLocaleString?.("es-CL", {
                 style: "currency",
                 currency: "CLP",
@@ -43,10 +45,11 @@ export default function ProductCard({ product, addToCart, onQuickView }) {
               }) ?? `$${product.price}`}
             </strong>
 
-            <div className="d-flex gap-2">
+            {/* Acciones: botones Ver y Agregar */}
+            <div className="d-flex gap-2 flex-shrink-0">
               <button
                 type="button"
-                className="btn btn-outline-secondary btn-sm rounded-pill"
+                className="btn btn-outline-secondary btn-sm rounded-pill px-2"
                 onClick={() => onQuickView?.(product)}
                 aria-label={`Ver rápido ${product.name}`}
               >
@@ -55,7 +58,7 @@ export default function ProductCard({ product, addToCart, onQuickView }) {
 
               <button
                 type="button"
-                className="btn btn-primary btn-sm rounded-pill"
+                className="btn btn-primary btn-sm rounded-pill px-3"
                 onClick={() => addToCart(product)}
                 aria-label={`Agregar ${product.name} al carrito`}
               >

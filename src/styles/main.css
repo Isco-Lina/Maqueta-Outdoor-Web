@@ -312,3 +312,23 @@ footer a:hover {
     margin-top: 6px;
   }
 }
+
+/* Evita que la fila de acciones se corte en pantallas angostas */
+@media (max-width: 420px) {
+  .product-card .card-body > .d-flex.flex-wrap {
+    row-gap: 0.5rem; /* espacio vertical cuando hace wrap */
+  }
+  .product-card .card-body strong {
+    width: 100%; /* precio ocupa la fila de arriba si hace wrap */
+  }
+  .product-card .card-body .btn {
+    white-space: nowrap; /* evitar que "Agregar" se parta */
+  }
+}
+
+/* Opcional: asegurar imágenes proporcionadas y sin desbordes */
+.product-card .product-img {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* cuadrado; cambia si prefieres otra proporción */
+  object-fit: contain;
+}
