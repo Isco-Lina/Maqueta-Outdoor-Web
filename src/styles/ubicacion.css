@@ -1,56 +1,46 @@
-/* Título principal de la página */
 .ubicacion-page h1 {
-  font-weight: 800; /* Título más pesado para jerarquía clara */
-  letter-spacing: 0.02em; /* Micro tracking para legibilidad en mayúsculas */
+  font-weight: 800; 
+  letter-spacing: 0.02em; 
 }
-
-/* Subtítulo genérico (aplicable a h2/h3 con esta clase) */
 .subtitle {
-  text-transform: none; /* Evita forzar mayúsculas si vienen de Bootstrap */
-  font-weight: 700; /* Un nivel por debajo del h1 */
-  letter-spacing: 0.01em; /* Ligero ajuste de tracking */
+  text-transform: none; 
+  font-weight: 700; 
+  letter-spacing: 0.01em; 
 }
-
-/* Espaciado vertical entre ítems de una lista de contacto */
 .contact-list li + li {
   margin-top: 4px;
 }
 
-/* Lista con bullets estilizados (sin el disc nativo) */
 .bullet-list {
-  list-style: none; /* Quitamos el bullet por defecto */
-  padding-left: 0; /* Reseteo del padding para controlar el indent */
+  list-style: none; 
+  padding-left: 0; 
 }
 .bullet-list li {
-  position: relative; /* Permite posicionar el pseudo-elemento */
-  padding-left: 1.25rem; /* Indent para el bullet personalizado */
-  margin: 8px 0; /* Separación vertical coherente */
-  color: #495057; /* Gris Bootstrap (texto secundario) */
+  position: relative; 
+  padding-left: 1.25rem; 
+  margin: 8px 0; 
+  color: #495057; 
 }
 .bullet-list li::before {
-  content: "•"; /* Bullet personalizado (puedes cambiar por SVG) */
+  content: "•"; 
   position: absolute;
   left: 0;
   top: 0;
-  color: #0d6efd; /* Azul Bootstrap primario */
-  font-weight: 900; /* Bullet más “denso” visualmente */
+  color: #0d6efd; 
+  font-weight: 900; 
 }
-
-/* Tarjetas dentro de la página de Ubicación */
 .ubicacion-page .card {
-  border: 1px solid rgba(0, 0, 0, 0.08); /* Borde sutil */
-  transition: transform 0.15s ease, box-shadow 0.15s ease; /* Animación suave */
+  border: 1px solid rgba(0, 0, 0, 0.08); 
+  transition: transform 0.15s ease, box-shadow 0.15s ease; 
 }
 .ubicacion-page .card:hover {
-  transform: translateY(-2px); /* Micro elevación */
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12); /* Sombra más marcada */
+  transform: translateY(-2px); 
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12); 
 }
-
-/* Bloques <details> para info expandible (cómo llegar, horarios, etc.) */
 .ubicacion-page details summary {
-  cursor: pointer; /* Indica que es interactivo */
-  padding: 6px 0; /* Tocabilidad / ritmo vertical */
+  cursor: pointer; 
+  padding: 6px 0;
 }
 .ubicacion-page details[open] summary {
-  color: #0d6efd; /* Resalta el estado abierto con el primario */
+  color: #0d6efd; 
 }

@@ -1,7 +1,3 @@
-/* ============================
-   ALT FOOTER
-   ============================ */
-
 .alt-footer {
   background: #0f141a;
   color: #f5f7fa;
@@ -10,7 +6,6 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Top section */
 .alt-footer-top {
   margin-bottom: 40px;
 }
@@ -34,7 +29,6 @@
   line-height: 1.4;
 }
 
-/* Bottom section */
 .alt-footer-bottom {
   display: flex;
   flex-direction: column;
@@ -93,7 +87,6 @@
   object-fit: contain;
 }
 
-/* Responsive */
 @media (max-width: 575.98px) {
   .alt-footer {
     padding: 40px 16px 24px;

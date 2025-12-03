@@ -1,18 +1,6 @@
-/**
- * Componente: Categories
- * Propósito: Mostrar accesos rápidos a categorías por audiencia y por subcategoría.
- * Navegación: <Link> a "/productos" con query params (?aud, ?cat, ?subcat).
- * Notas:
- * - Las tarjetas usan imagen de fondo con overlay y CTA.
- * - Los datos están embebidos; podrían externalizarse a @data/categories.js.
- */
 import { Link } from "react-router-dom";
-import "../../styles/categories.css"; // o: import "@styles/categories.css";
+import "../../styles/categories.css"; 
 
-/**
- * Subcomponente: CategoryCard
- * Propósito: Tarjeta reutilizable con título, subtítulo, imagen de fondo y CTA.
- */
 function CategoryCard({ title, subtitle, img, to }) {
   return (
     <div className="col-12 col-sm-6 col-lg-3">
@@ -26,9 +14,7 @@ function CategoryCard({ title, subtitle, img, to }) {
           backgroundPosition: "center",
         }}
       >
-        {/* Capa oscura para contraste de texto */}
         <div className="cat-overlay" />
-        {/* Contenido centrado */}
         <div className="position-absolute top-50 start-50 translate-middle text-center text-white w-100 px-3">
           <h3
             className="fw-bold"
@@ -48,10 +34,6 @@ function CategoryCard({ title, subtitle, img, to }) {
   );
 }
 
-/**
- * Datos: audiencias principales
- * - `to` incluye query params esperados por la vista de productos.
- */
 const AUDIENCE_CARDS = [
   {
     title: "Hombre",
@@ -69,21 +51,16 @@ const AUDIENCE_CARDS = [
     title: "Niños y Bebés",
     subtitle: "Ropa outdoor infantil",
     img: "/images/categories/niños.png",
-    // Infantil = subcat y además aud=ninos
     to: "/productos?aud=ninos&cat=ropa&subcat=infantil",
   },
   {
     title: "Accesorios",
     subtitle: "Mochilas, gorros, polainas y más",
     img: "/images/categories/accesorios.png",
-    // Accesorios es categoría distinta; subcat=accesorios por consistencia
     to: "/productos?cat=accesorios&subcat=accesorios",
   },
 ];
 
-/**
- * Datos: subcategorías por tipo de prenda/capa
- */
 const SUBCATEGORY_CARDS = [
   {
     title: "Primera capa",

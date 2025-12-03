@@ -1,21 +1,10 @@
-/**
- * Componente: CartDetail
- * Propósito: Mostrar un resumen colapsable del carrito bajo el formulario (detalle por ítem + subtotal).
- * Entrada: { cart = [] }  // Array de productos con { id, name, price, qty, img, size?, color? }
- * Notas:
- * - useMemo calcula filas normalizadas, subtotal y cantidad total cuando cambia `cart`.
- * - CLP formateado con toLocaleString("es-CL") sin decimales.
- * - UI con Bootstrap: card + collapse; el header actúa como disparador del colapso.
- */
 import { useMemo } from "react";
 
 export default function CartDetail({ cart = [] }) {
-  // Memoizamos el cálculo para evitar recomputar en cada render si `cart` no cambió.
   const { rows, subtotal, count } = useMemo(() => {
     let subtotal = 0;
     let count = 0;
 
-    // Normalizamos cada producto (aseguramos number y calculamos total de línea).
     const rows = cart.map((p) => {
       const price = Number(p.price) || 0;
       const qty = Number(p.qty) || 1;

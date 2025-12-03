@@ -1,8 +1,3 @@
-// Productos WEKE en un solo arreglo, con subcategoría:
-// - category: 'ropa' | 'accesorios'
-// - subcat: 'infantil' | 'primera-capa' | 'segunda-capa' | 'tercera-capa' | 'accesorios'
-// - audience: 'hombre' | 'mujer' | 'ninos' | 'unisex'
-
 const products = [
   // ===== INFANTIL (ROPA | ninos | subcat: infantil) =====
   {
@@ -642,5 +637,5 @@ const products = [
   },
 ];
 
-export { products }; // named
-export default products; // default
+export { products };
+export default products; 

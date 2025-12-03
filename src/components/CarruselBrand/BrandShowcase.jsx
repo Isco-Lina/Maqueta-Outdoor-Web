@@ -1,13 +1,4 @@
-/**
- * Componente: BrandShowcase
- * Propósito: Mostrar un carrusel/“marquee” infinito de marcas con animación CSS.
- * Entrada: (ninguna por ahora) usa una lista embebida de { alt, src }.
- * Notas:
- * - Se duplica la lista (`loop`) para simular scroll infinito sin cortes.
- * - La animación y el overflow los maneja `brandShowcase.css`.
- * - Accesibilidad: aria-label por ítem; considerar reduced-motion en CSS.
- */
-import "../../styles/brandShowcase.css"; // o: import "@styles/brandShowcase.css";
+import "../../styles/brandShowcase.css"; 
 
 const brands = [
   { alt: "WEKE", src: "/images/brands/logo-weke.png" },
@@ -18,7 +9,6 @@ const brands = [
 ];
 
 export default function BrandShowcase() {
-  // Duplicamos la lista para que, al terminar, continúe sin “salto”.
   const loop = [...brands, ...brands];
 
   return (
@@ -31,7 +21,6 @@ export default function BrandShowcase() {
         </p>
       </div>
 
-      {/* Pista con desplazamiento horizontal continuo (ver CSS) */}
       <div className="brand-rail rounded-4">
         <div className="brand-track">
           {loop.map((b, i) => (

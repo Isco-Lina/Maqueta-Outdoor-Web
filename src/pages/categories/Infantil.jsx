@@ -1,9 +1,3 @@
-/**
- * Página: Infantil
- * Propósito:
- *  - Redireccionar a productos ropa → audiencia niños.
- *  - Alias /categorias/infantil → /productos?aud=ninos&cat=ropa
- */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

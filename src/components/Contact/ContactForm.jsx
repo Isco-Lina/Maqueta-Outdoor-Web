@@ -1,33 +1,14 @@
-/**
- * Componente: ContactForm
- * Propósito: Formulario de contacto/envío. Genera un mensaje con el carrito + datos del cliente
- *            y ofrece 3 acciones: WhatsApp, Email o Copiar detalle.
- * Entradas:
- *  - cart: Array<{ id, name, price, qty, variant?, img?, size?, color? }>
- *  - company: { whatsappIntl: "569XXXXXXXX", salesEmail: "ventas@..." }
- * Dependencias:
- *  - buildOrderText: arma el texto base a partir de cart + customer.
- *  - buildWhatsAppURL: devuelve una URL wa.me con message URL-encoded.
- *  - buildMailtoURL: devuelve un mailto con subject y body correctamente codificados.
- * Notas:
- *  - Se normaliza el carrito (numbers) con useMemo.
- *  - El usuario puede añadir "notas" que se insertan antes del pie "— Enviado desde la tienda Web —".
- *  - Los botones no hacen submit del form (type="button").
- */
 import { useMemo, useState } from "react";
 import {
-  buildOrderText, // arma el texto con carrito + datos cliente
-  buildWhatsAppURL, // construye URL wa.me con el texto ya encoded
-  buildMailtoURL, // construye un mailto con subject y body
+  buildOrderText, 
+  buildWhatsAppURL, 
+  buildMailtoURL, 
 } from "../../utils/orderMessage";
 
 export default function ContactForm({ cart = [], company = {} }) {
-  // 1) Datos base de la empresa (fallbacks de maqueta si no llegan por props)
-  // IMPORTANTE: whatsappIntl sin símbolo "+" y en formato internacional (ej: 56998765432)
   const WHATSAPP_NUMBER = company.whatsappIntl || "56912345678";
   const SALES_EMAIL = company.salesEmail || "ventas@tutienda.cl";
 
-  // 2) Estado controlado del cliente (inputs)
   const [customer, setCustomer] = useState({
     nombre: "",
     telefono: "",
@@ -35,13 +16,11 @@ export default function ContactForm({ cart = [], company = {} }) {
     region: "",
     comuna: "",
     direccion: "",
-    metodoContacto: "whatsapp", // solo informativo dentro del texto generado
+    metodoContacto: "whatsapp", 
   });
 
-  // 3) Campo libre de notas
   const [notas, setNotas] = useState("");
 
-  // 4) Normalización del carrito: garantizamos number en price/qty
   const items = useMemo(
     () =>
       (Array.isArray(cart) ? cart : []).map((it) => ({
@@ -54,26 +33,21 @@ export default function ContactForm({ cart = [], company = {} }) {
     [cart]
   );
 
-  // 5) Texto base generado a partir de items + customer (sin "notas" aún)
   const { texto } = useMemo(() => {
     return buildOrderText({
       cart: items,
       customer: { ...customer },
-      extra: { despachoEstimado: 0 }, // placeholder para cálculo futuro si aplica
+      extra: { despachoEstimado: 0 },
     });
   }, [items, customer]);
 
-  // 6) Handler genérico para inputs controlados
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCustomer((s) => ({ ...s, [name]: value }));
   };
 
-  // 7) Helpers de estado
   const hasItems = items.length > 0;
 
-  // 8) Inserta "notas" justo antes del pie del mensaje
-  //    Mantiene intacto el marcador "— Enviado desde la tienda Web —"
   const buildTextWithNotes = () =>
     texto.replace(
       "— Enviado desde la tienda Web —",
@@ -82,7 +56,6 @@ export default function ContactForm({ cart = [], company = {} }) {
       }— Enviado desde la tienda Web —`
     );
 
-  // 9) Validación mínima antes de disparar acciones
   const ensureBasic = () => {
     if (!hasItems) {
       alert("Tu carrito está vacío.");
@@ -95,7 +68,6 @@ export default function ContactForm({ cart = [], company = {} }) {
     return true;
   };
 
-  // 10) Acción: abrir chat de WhatsApp con mensaje prellenado
   const handleWhatsApp = () => {
     if (!ensureBasic()) return;
     if (!WHATSAPP_NUMBER) {
@@ -103,13 +75,12 @@ export default function ContactForm({ cart = [], company = {} }) {
       return;
     }
     const url = buildWhatsAppURL({
-      phoneIntl: WHATSAPP_NUMBER, // ej: "56987654321"
+      phoneIntl: WHATSAPP_NUMBER,
       message: buildTextWithNotes(),
     });
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
-  // 11) Acción: abrir cliente de correo con subject + body
   const handleEmail = () => {
     if (!ensureBasic()) return;
     if (!SALES_EMAIL) {
@@ -129,7 +100,6 @@ export default function ContactForm({ cart = [], company = {} }) {
     <form className="border rounded-4 p-3">
       <h4 className="mb-3">Datos de contacto y envío</h4>
 
-      {/* 12) Grid de campos (Bootstrap) */}
       <div className="row g-3">
         {/* Nombre */}
         <div className="col-12 col-md-6">
@@ -217,7 +187,7 @@ export default function ContactForm({ cart = [], company = {} }) {
           />
         </div>
 
-        {/* Preferencia de contacto (se refleja en el texto generado) */}
+        {/* Preferencia de contacto */}
         <div className="col-12">
           <label className="form-label">Preferencia de contacto</label>
           <div className="d-flex gap-3">
@@ -255,7 +225,6 @@ export default function ContactForm({ cart = [], company = {} }) {
 
       <hr className="my-4" />
 
-      {/* 13) Acciones (no envían el form) */}
       <div className="d-flex flex-wrap gap-2">
         <button
           type="button"
@@ -281,7 +250,6 @@ export default function ContactForm({ cart = [], company = {} }) {
         </button>
       </div>
 
-      {/* 14) Nota legal/UX de la maqueta */}
       <p className="text-muted small mt-3">
         * Coordinamos por WhatsApp o Email. Envíos a todo Chile por Starken /
         Chilexpress u operador a convenir.

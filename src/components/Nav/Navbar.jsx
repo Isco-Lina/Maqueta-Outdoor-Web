@@ -1,12 +1,3 @@
-/**
- * Componente: Navbar
- * Propósito: Barra superior con branding, navegación principal y acceso al carrito.
- * Navegación: Link/NavLink -> "/", "/productos", "/contacto", "/ubicacion", "/carrito".
- * Notas:
- * - Usa colapso de Bootstrap en mobile; el toggler controla #wekNav.
- * - <NavLink> marca .active automáticamente según la ruta actual.
- * - El contador de carrito llega por prop `cartCount` (número).
- */
 import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar({ cartCount = 0 }) {
@@ -18,7 +9,6 @@ export default function Navbar({ cartCount = 0 }) {
           className="navbar-brand fw-bold d-flex align-items-center gap-2"
           to="/"
         >
-          {/* Si despliegas en subcarpeta, podrías usar import.meta.env.BASE_URL */}
           <img
             src="/logo.png"
             alt="Logo"
@@ -43,7 +33,7 @@ export default function Navbar({ cartCount = 0 }) {
 
         {/* Menú colapsable */}
         <div className="collapse navbar-collapse" id="wekNav">
-          {/* Enlaces principales (alineados a la izquierda) */}
+          {/* Enlaces principales */}
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <NavLink end to="/" className="nav-link">

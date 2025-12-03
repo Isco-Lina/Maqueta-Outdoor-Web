@@ -1,19 +1,6 @@
-/**
- * Componente: Filters
- * Propósito: Sincroniza filtros con la URL (?aud, ?cat, ?subcat, ?sortBy, ?q) y expone controles.
- * Entradas:
- *  - current: { aud, cat, subcat, sortBy, keyword }
- *  - onChange(next): notifica al padre el estado consolidado de filtros
- * Navegación:
- *  - Lee/Escribe SearchParams (useSearchParams + useNavigate).
- * Notas:
- *  - Subcategoría siempre visible; si cat="all", muestra todas las subcats.
- *  - Convenciones: aud ∈ {hombre, mujer, ninos, all}, cat ∈ {ropa, accesorios, all}.
- */
 import { useEffect, useMemo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-// 1) Subcategorías por categoría
 const SUBCATS_BY_CAT = {
   ropa: [
     { value: "all", label: "Todas" },
@@ -28,7 +15,6 @@ const SUBCATS_BY_CAT = {
   ],
 };
 
-// 2) Lista plana de TODAS las subcategorías (para cat="all")
 const ALL_SUBCATS = [
   { value: "all", label: "Todas" },
   { value: "infantil", label: "Infantil" },
@@ -42,20 +28,18 @@ export default function Filters({ current, onChange }) {
   const [sp] = useSearchParams();
   const navigate = useNavigate();
 
-  // 3) Leer valores iniciales desde la URL (con defaults)
   const fromUrl = useMemo(() => {
-    const aud = sp.get("aud") || "all"; // hombre|mujer|ninos|all
-    const cat = sp.get("cat") || "all"; // ropa|accesorios|all
+    const aud = sp.get("aud") || "all"; 
+    const cat = sp.get("cat") || "all"; 
     const subcat = sp.get("subcat") || "all";
     const sortBy = sp.get("sortBy") || "relevance";
     const keyword = sp.get("q") || "";
     return { aud, cat, subcat, sortBy, keyword };
   }, [sp]);
 
-  // 4) Empujar cambios de URL -> estado padre (evita deps a `current` para no crear loops)
   useEffect(() => {
     onChange({ ...current, ...fromUrl });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [
     fromUrl.aud,
     fromUrl.cat,
@@ -64,13 +48,11 @@ export default function Filters({ current, onChange }) {
     fromUrl.keyword,
   ]);
 
-  // 5) Opciones de subcategoría: si cat="all", mostramos todas
   const subcatOptions = useMemo(() => {
     if (current.cat === "all") return ALL_SUBCATS;
     return SUBCATS_BY_CAT[current.cat] || [{ value: "all", label: "Todas" }];
   }, [current.cat]);
 
-  // 6) Garantiza que subcat pertenezca a la cat actual; si no, corrige a "all"
   const coerceSubcat = (cat, subcat) => {
     const allowed = (cat === "all" ? ALL_SUBCATS : SUBCATS_BY_CAT[cat]) || [
       { value: "all" },
@@ -79,7 +61,6 @@ export default function Filters({ current, onChange }) {
     return values.includes(subcat) ? subcat : "all";
   };
 
-  // 7) Escribir URL desde el estado "next" (quita params en default para URLs limpias)
   const writeUrl = (next) => {
     const usp = new URLSearchParams(sp);
     next.aud === "all" ? usp.delete("aud") : usp.set("aud", next.aud);
@@ -95,7 +76,6 @@ export default function Filters({ current, onChange }) {
     navigate({ search: `?${usp.toString()}` }, { replace: true });
   };
 
-  // 8) Actualizar un campo, corrigiendo subcat si es incompatible
   const setField = (k, v) => {
     let next = { ...current, [k]: v };
 

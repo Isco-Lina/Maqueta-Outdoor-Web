@@ -1,16 +1,7 @@
-/**
- * Componente: Footer
- * Propósito: Pie de página con branding, navegación secundaria y redes/contacto.
- * Navegación: <Link> hacia rutas internas ("/", "/productos", "/categorias", "/contacto").
- * Notas:
- * - Las redes sociales usan <a> externas con target="_blank" + rel="noreferrer".
- * - Los íconos se cargan como imágenes estáticas desde /icons/.
- */
 import { Link } from "react-router-dom";
-import "../../styles/footer.css"; // o: import "@styles/footer.css";
+import "../../styles/footer.css"; 
 
 export default function Footer() {
-  // Año actual: se calcula en render (simple y suficiente aquí).
   const year = new Date().getFullYear();
 
   return (
@@ -106,12 +97,6 @@ export default function Footer() {
               loading="lazy"
             />
           </a>
-
-          {/* Si quieres teléfono clickable:
-          <a href="tel:+56223456789" aria-label="Llamar" title="Llamar">
-            <img src="/icons/phone.png" alt="Teléfono" className="alt-social" />
-          </a>
-          */}
         </div>
 
         <p className="alt-copy">

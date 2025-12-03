@@ -1,9 +1,3 @@
-/**
- * Página: TerceraCapa
- * Propósito:
- *  - Redireccionar a la vista de productos filtrada en ropa.
- *  - Alias /categorias/tercera-capa → /productos?cat=ropa
- */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

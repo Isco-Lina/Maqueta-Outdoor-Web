@@ -2,7 +2,6 @@ import ContactForm from "../components/Contact/ContactForm.jsx";
 import CartDetail from "../components/Carrito/CartDetail.jsx";
 
 export default function Contact({ cart = [], company }) {
-  // 1) Carrito: usamos props si viene con datos; si no, levantamos de localStorage
   const cartFromLS = (() => {
     try {
       return JSON.parse(localStorage.getItem("cart") || "[]");
@@ -11,8 +10,6 @@ export default function Contact({ cart = [], company }) {
     }
   })();
   const effectiveCart = Array.isArray(cart) && cart.length ? cart : cartFromLS;
-
-  // 2) Datos base para WA/Email
   const COMPANY = {
     nombre: "Outdoor Gear Montalay (Maqueta)",
     whatsappIntl: "56964344326",

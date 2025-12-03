@@ -1,9 +1,3 @@
-/**
- * Página: PrimeraCapa
- * Propósito:
- *  - Redireccionar a productos de categoría ropa (filtro general).
- *  - Alias /categorias/primera-capa → /productos?cat=ropa
- */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

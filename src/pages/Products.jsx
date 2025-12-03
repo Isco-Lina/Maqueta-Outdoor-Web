@@ -1,5 +1,3 @@
-// Página de Productos: aplica filtros + orden + quick view.
-
 import { useMemo, useCallback, useState } from "react";
 import Filters from "../components/Products/Filters.jsx";
 import ProductGrid from "../components/Products/ProductGrid.jsx";
@@ -15,7 +13,7 @@ export default function Products({ products, addToCart }) {
 
   const [flt, setFlt] = useState({
     cat: "all",
-    subcat: "all", // <--- NUEVO
+    subcat: "all", 
     min: 0,
     max: Infinity,
     keyword: "",
@@ -37,25 +35,20 @@ export default function Products({ products, addToCart }) {
     const kw = normalize(flt.keyword);
 
     let out = list.filter((p) => {
-      // 1) categoría
       const okCat = flt.cat === "all" ? true : p.category === flt.cat;
 
-      // 2) subcategoría (solo si hay filtro y el producto la tiene)
       const okSub =
         flt.subcat === "all" ? true : p.subcat && p.subcat === flt.subcat;
 
-      // 3) audiencia (permite unisex)
       const audField = normalize(p.audience || p.gender || p.segment || "");
       const okAud =
         flt.aud === "all"
           ? true
           : audField === normalize(flt.aud) || audField === "unisex";
 
-      // 4) precio
       const price = Number(p.price) || 0;
       const okPrice = price >= min && price <= max;
 
-      // 5) keyword
       const haystack = normalize(
         [p.name, p.brand, p.category, p.subcat].filter(Boolean).join(" ")
       );
@@ -64,7 +57,6 @@ export default function Products({ products, addToCart }) {
       return okCat && okSub && okAud && okPrice && okKw;
     });
 
-    // Orden
     switch (flt.sortBy) {
       case "priceAsc":
         out = out.slice().sort((a, b) => (a.price || 0) - (b.price || 0));

@@ -1,21 +1,9 @@
-/**
- * Componente: HeroCarousel
- * Propósito: Carousel full-width con overlay y dos CTAs por slide.
- * Dependencias:
- *  - Bootstrap JS bundle (ya incluido en el proyecto).
- *  - Estilos propios en hero-carousel.css (tamaño, overlay, typografía).
- * Navegación:
- *  - <Link> a rutas internas (ej: /productos?cat=ropa, /categorias, /productos?q=mochila).
- * Notas:
- *  - Los slides (SLIDES) están embebidos; se podrían extraer a @data/heroSlides.js.
- *  - `data-bs-ride="carousel"` y `carousel-fade` para auto-rotación y transición suave.
- */
 import { Link } from "react-router-dom";
-import "../../styles/hero-carousel.css"; // o: import "@styles/hero-carousel.css";
+import "../../styles/hero-carousel.css"; 
 
 const SLIDES = [
   {
-    img: "/images/hero/inicio-5.jpg", // 1920x800 recomendado
+    img: "/images/hero/inicio-5.jpg", 
     title: "Explora sin límites",
     text: "Ropa y equipamiento outdoor para tus aventuras.",
     cta1: { to: "/productos?cat=ropa", label: "Ver ropa" },
@@ -48,7 +36,7 @@ export default function HeroCarousel() {
         className="carousel slide carousel-fade"
         data-bs-ride="carousel"
       >
-        {/* Indicadores (uno por slide) */}
+        {/* Indicadores de slides */}
         <div className="carousel-indicators">
           {SLIDES.map((_, i) => (
             <button
@@ -71,14 +59,12 @@ export default function HeroCarousel() {
               className={`carousel-item ${i === 0 ? "active" : ""}`}
               data-bs-interval="6000" // cada slide permanece 6s
             >
-              {/* Imagen full width (ajustada por CSS con object-fit) */}
+              {/* Imagen full width */}
               <img
                 src={s.img}
                 className="d-block w-100 hero-slide-img"
                 alt={s.title}
-                loading={i === 0 ? "eager" : "lazy"} // prioriza el primer slide
-                // width/height sugeridos para evitar CLS si conoces dimensiones
-                // width={1920} height={800}
+                loading={i === 0 ? "eager" : "lazy"} 
               />
 
               {/* Capa oscura para contraste del texto */}

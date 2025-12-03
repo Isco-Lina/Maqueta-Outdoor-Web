@@ -1,7 +1,6 @@
 import "../styles/ubicacion.css";
 
 export default function Ubicacion({ cart = [], company }) {
-  // 1) Carrito: si no llega por props, levanta del localStorage
   const cartFromLS = (() => {
     try {
       return JSON.parse(localStorage.getItem("weke-cart") || "[]");
@@ -11,7 +10,6 @@ export default function Ubicacion({ cart = [], company }) {
   })();
   const effectiveCart = Array.isArray(cart) && cart.length ? cart : cartFromLS;
 
-  // 2) Datos base de la empresa (sobrescribibles por prop `company`)
   const COMPANY = {
     nombre: "Outdoor Gear Montalay (Maqueta)",
     whatsappIntl: "56964344326", // sin "+"
@@ -65,13 +63,13 @@ export default function Ubicacion({ cart = [], company }) {
               <h6 className="subtitle mt-2">Outdoor Gear Montalay</h6>
               <ul className="list-unstyled m-0 small contact-list">
                 <li>
-                  📞 Teléfono:{" "}
+                  Teléfono:{" "}
                   <a href={`tel:${COMPANY.telefonoFijo.replace(/\s+/g, "")}`}>
                     {COMPANY.telefonoFijo}
                   </a>
                 </li>
                 <li>
-                  💬 WhatsApp ventas:{" "}
+                  WhatsApp ventas:{" "}
                   <a
                     target="_blank"
                     rel="noreferrer"
@@ -81,12 +79,12 @@ export default function Ubicacion({ cart = [], company }) {
                   </a>
                 </li>
                 <li>
-                  ✉️ Correo:{" "}
+                  Correo:{" "}
                   <a href={`mailto:${COMPANY.salesEmail}`}>
                     {COMPANY.salesEmail}
                   </a>
                 </li>
-                <li>⏰ Horario: {COMPANY.horario}</li>
+                <li>Horario: {COMPANY.horario}</li>
               </ul>
             </div>
           </div>

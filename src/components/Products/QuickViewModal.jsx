@@ -1,21 +1,9 @@
-/**
- * Componente: QuickViewModal
- * Propósito: Modal ligero sin JavaScript de Bootstrap (controlado por props).
- * Entradas:
- *  - show: boolean (visible/oculto)
- *  - product: objeto de producto (name, img, description, price)
- *  - onAdd(product): callback para agregar al carrito
- *  - onClose(): callback para cerrar el modal
- * Notas:
- *  - Renderiza su propio backdrop y usa clases de Bootstrap para el estilo.
- *  - Retorna null cuando no está visible para no impactar el DOM.
- */
 export default function QuickViewModal({ show, product, onAdd, onClose }) {
   if (!show || !product) return null;
 
   return (
     <>
-      {/* Contenedor modal (overlay semitransparente) */}
+      {/* Contenedor modal */}
       <div
         className="modal fade show d-block"
         tabIndex="-1"

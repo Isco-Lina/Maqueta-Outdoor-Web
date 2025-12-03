@@ -1,44 +1,34 @@
-// Página del carrito. Muestra items, permite cambiar cantidad y quitar.
-// Incluye botón "Coordinar despacho" que lleva a /contacto.
-// Además, sincroniza el carrito en localStorage para que Contact.jsx pueda leerlo.
-
 import { useEffect, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
   const navigate = useNavigate();
 
-  // Normaliza items (asegura números) y memoiza para no recalcular en cada render
   const items = useMemo(
     () =>
       (Array.isArray(cart) ? cart : []).map((i) => ({
         ...i,
-        price: Number(i.price) || 0, // precio numérico
-        qty: Number(i.qty) || 1, // cantidad mínima = 1
+        price: Number(i.price) || 0, 
+        qty: Number(i.qty) || 1, 
       })),
     [cart]
   );
 
-  // Total del carrito (precio * cantidad)
   const total = useMemo(
     () => items.reduce((sum, i) => sum + i.price * i.qty, 0),
     [items]
   );
 
-  // Efecto: guarda el carrito en localStorage para que /contacto lo recupere
   useEffect(() => {
     try {
       localStorage.setItem("cart", JSON.stringify(items));
     } catch {
-      // ignoramos errores de localStorage
     }
   }, [items]);
 
-  // Helpers para sumar/restar cantidad con mínimo 1
   const dec = (id, current) => setQty(id, Math.max(1, Number(current) - 1));
   const inc = (id, current) => setQty(id, Number(current) + 1);
 
-  // CTA que navega a la página de contacto
   const goContact = () => {
     if (!items.length) {
       alert("Tu carrito está vacío.");
@@ -47,7 +37,6 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
     navigate("/contacto");
   };
 
-  // Estado vacío: muestra CTA para ir a productos
   if (!items.length) {
     return (
       <section className="container my-5">
@@ -59,19 +48,16 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
     );
   }
 
-  // Render principal: lista de ítems + pie con total y acciones
   return (
     <section className="container my-5">
       <h1 className="mb-3">Carrito</h1>
 
-      {/* 👇 agregamos la clase cart-list para estilos responsive específicos */}
       <ul className="list-group cart-list mb-3">
         {items.map((item) => (
           <li
             className="list-group-item d-flex align-items-center gap-3"
             key={item.id}
           >
-            {/* Miniatura */}
             <img
               src={item.img}
               alt={item.name}
@@ -80,7 +66,6 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
               style={{ objectFit: "cover" }}
             />
 
-            {/* Nombre + precio unitario */}
             <div className="me-auto">
               <div className="fw-semibold">{item.name}</div>
               <div className="text-muted">
@@ -88,7 +73,6 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
               </div>
             </div>
 
-            {/* Stepper de cantidad (±) */}
             <div className="cart-stepper d-flex align-items-center gap-2">
               <button
                 type="button"
@@ -116,7 +100,6 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
               </button>
             </div>
 
-            {/* Quitar ítem */}
             <button
               className="btn btn-outline-danger cart-remove"
               onClick={() => removeFromCart(item.id)}
@@ -127,7 +110,6 @@ export default function CartPage({ cart, setQty, removeFromCart, clearCart }) {
         ))}
       </ul>
 
-      {/* Pie: limpiar carrito, total y CTA para coordinar despacho */}
       <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
         <button className="btn btn-outline-secondary" onClick={clearCart}>
           Vaciar carrito
